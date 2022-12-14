@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "shop/user")
 public class userController{
 
-    private final UserRepo userRepo;
+    private final UserRepository userRepo;
 
-    public userController(UserRepo userRepo) {
+    public userController(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
 
 
     @GetMapping
     public List<User> getUser(){
-        return UserRepo.findAll();
+        return userRepo.findAll();
     }
 
 
@@ -27,7 +27,7 @@ public class userController{
         user.setFirstName(request.firstName());
         user.setLastName(request.lastName());
         user.setPassword(request.password());
-        user.setEmail(request.email());
+        user.setEmailAddress(request.email());
 
         userRepo.save(user);
     }
