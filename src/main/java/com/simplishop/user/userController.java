@@ -32,9 +32,23 @@ public class userController{
         userRepo.save(user);
     }
 
+    @PutMapping(path = "{id}")
+    public void updateStudent(
+            @PathVariable("id") Integer id,
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String password,
+            @RequestParam(required = false) String emailAddress){
+        UserService.updateUser(id, firstName, lastName, password, emailAddress);
+
+
     @DeleteMapping("{userId}")
-    public void deleteUser(@PathVariable("userId") Integer id){
-        userRepo.deleteById(id);
+//    public void deleteUser(@PathVariable("userId") Integer id){
+//    userRepo.deleteById(id);
+        public void deletingUser(@PathVariable("userId") Integer id) {
+            UserService.deleteUser(id);
+        }
+
     }
 
 
