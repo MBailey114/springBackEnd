@@ -37,8 +37,7 @@ public class User {
     // private List<Item> basket;
 
 
-    public User(Integer id, String firstName, String lastName, String password, String emailAddress) {
-        this.id = id;
+    public User(String firstName, String lastName, String password, String emailAddress) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
