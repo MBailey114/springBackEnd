@@ -29,14 +29,39 @@ public class itemConfig {
                     12.99
             );
             Item item3 = new Item(
-                    "",
-                    "",
-                    "",
-                    "",
-
-                    )
+                    "Book",
+                    "https://commons.wikimedia.org/wiki/File:Book.png",
+                    "A book is a medium for recording information in the form of writing or images",
+                    "Education",
+                    1,
+                    19.99
+            );
+            Item item4 = new Item(
+                    "Phone",
+                    "https://commons.wikimedia.org/wiki/File:Phone.png",
+                    "A phone is a device used for communication and messaging.",
+                    "Technology",
+                    1,
+                    199.99
+            );
+            Item item5 = new Item(
+                    "Clothing",
+                    "https://commons.wikimedia.org/wiki/File:Clothing.png",
+                    "Clothing is a type of protective layer worn by humans for warmth or fashion",
+                    "Fashion",
+                    1,
+                    29.99
+            );
+            Item item6 = new Item(
+                    "Toy",
+                    "https://commons.wikimedia.org/wiki/File:Toy.png",
+                    "A toy is an object used for play or entertainment",
+                    "Entertainment",
+                    1,
+                    9.99
+            );
             itemRepository.saveAll(
-                    List.of(item1, item2, item3));
+                    List.of(item1, item2, item3, item4, item5, item6));
         };
     }
 }
