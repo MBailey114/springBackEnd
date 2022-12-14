@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Component
 public class UserService {
-    private final UserRepository userRepo;
+    private static UserRepository userRepo;
 
     @Autowired
     public UserService(UserRepository userRepo) {
