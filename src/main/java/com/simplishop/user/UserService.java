@@ -17,12 +17,14 @@ public class UserService {
     }
 
 //    **IN PROGRESS**
-    public static void updateUser(Integer id, String firstName, String lastName, String password, String emailAddress) {
+    public static void updateUser(Long id, String firstName, String lastName, String password, String emailAddress) {
 
 
     }
 
-    public static void deleteUser(Integer id) {
+    public static void deleteUser(Long id) {
+
+
         boolean exists = userRepo.existsById(id);
         if (!exists) {
             throw new IllegalStateException("user with id " + id + " does not exist");

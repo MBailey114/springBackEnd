@@ -36,7 +36,7 @@ public class userController{
 
     @PutMapping(path = "{id}")
     public void updateStudent(
-            @PathVariable("id") Integer id,
+            @PathVariable("id") Long id,
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName,
             @RequestParam(required = false) String password,
@@ -45,8 +45,8 @@ public class userController{
     }
 
 
-    @DeleteMapping("{userId}")
-        public void deletingUser(@PathVariable("userId") Integer id) {
+    @DeleteMapping("{id}")
+        public void deletingUser(@PathVariable("id") Long id) {
             UserService.deleteUser(id);
         }
 
