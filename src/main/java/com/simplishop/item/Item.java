@@ -19,25 +19,25 @@ public class Item {
     private String image;
     private String description;
     private String category;
-    private Integer quatity;
+    private Integer quantity;
     private Double price;
 
-    public Item(Long id, String name, String image, String description, String category, Integer quatity, Double price) {
+    public Item(Long id, String name, String image, String description, String category, Integer quantity, Double price) {
         Id = id;
         this.name = name;
         this.image = image;
         this.description = description;
         this.category = category;
-        this.quatity = quatity;
+        this.quantity = quantity;
         this.price = price;
     }
 
-    public Item(String name, String image, String description, String category, Integer quatity, Double price) {
+    public Item(String name, String image, String description, String category, Integer quantity, Double price) {
         this.name = name;
         this.image = image;
         this.description = description;
         this.category = category;
-        this.quatity = quatity;
+        this.quantity = quantity;
         this.price = price;
     }
 
@@ -64,8 +64,8 @@ public class Item {
         return category;
     }
 
-    public Integer getQuatity() {
-        return quatity;
+    public Integer getQuantity() {
+        return quantity;
     }
 
     public Double getPrice() {
@@ -88,8 +88,8 @@ public class Item {
         this.category = category;
     }
 
-    public void setQuatity(Integer quatity) {
-        this.quatity = quatity;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public void setPrice(Double price) {
