@@ -15,17 +15,17 @@ public class ItemController {
         this.itemService = itemService;
     }
     @GetMapping
-    public List<Item> getItems(){
+    public List<Item> getAllItems(){
         return itemService.getItems();
     }
 
     @GetMapping(path = "{itemId}")
-    public String getItemById(@PathVariable("itemId") Long itemId){
+    public String getOneItemById(@PathVariable("itemId") Long itemId){
         return itemService.getItemById(itemId);
     }
 
     @GetMapping(path = "{category}")
-    public String getItemByCategory(@PathVariable("category") String category){
+    public String getOneItemByCategory(@PathVariable("category") String category){
         return itemService.getItemByCategory(category);
     }
     @PostMapping
@@ -34,12 +34,12 @@ public class ItemController {
         itemService.addNewItem(item);
     }
     @DeleteMapping(path = "{itemId}")
-    public void deleteItem(@PathVariable("itemId") Long itemId)
+    public void deleteOneItem(@PathVariable("itemId") Long itemId)
     {
         itemService.deleteItem(itemId);
     }
     @PutMapping(path = "{itemId}")
-    public void updateItem(@PathVariable("itemId") Long itemId,
+    public void updateOneItem(@PathVariable("itemId") Long itemId,
                            @PathVariable(required = false) String name,
                            @PathVariable(required = false) String image,
                            @PathVariable(required = false) String description,
