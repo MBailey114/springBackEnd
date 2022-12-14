@@ -1,4 +1,4 @@
-package com.simplishop.SimpliShop.User;
+package com.simplishop.user;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
