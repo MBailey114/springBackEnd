@@ -31,6 +31,8 @@ public class ItemService {
     }
 
     public void deleteItem(Long itemId){
+        Item item = itemRepository.findById(itemId).orElseThrow(() -> new IllegalStateException(
+                "Item with id " + itemId + " does not exist"));
         itemRepository.deleteById(itemId);
     }
 
