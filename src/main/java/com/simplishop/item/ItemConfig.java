@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
-public class itemConfig {
+public class ItemConfig {
     @Bean
     CommandLineRunner commandLineRunnerItem(
             ItemRepository itemRepository) {
