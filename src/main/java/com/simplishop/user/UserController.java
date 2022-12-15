@@ -2,7 +2,9 @@ package com.simplishop.user;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 @RestController
@@ -23,6 +25,9 @@ public class UserController {
 
 
     record NewUser(String firstName, String lastName, String password, String email){};
+
+    record UpdateUser(Optional<String> firstName, Optional<String> lastName, Optional<String> password, Optional<String> email){};
+
     @PostMapping
     public void addUser(@RequestBody NewUser request){
         User user = new User("","","","");
@@ -30,18 +35,12 @@ public class UserController {
         user.setLastName(request.lastName());
         user.setPassword(request.password());
         user.setEmailAddress(request.email());
-
         userService.addNewUser(user);
     }
 
     @PutMapping(path = "{id}")
-    public void updateStudent(
-            @PathVariable("id") Long id,
-            @RequestParam(required = false) String firstName,
-            @RequestParam(required = false) String lastName,
-            @RequestParam(required = false) String password,
-            @RequestParam(required = false) String emailAddress) {
-        UserService.updateUser(id, firstName, lastName, password, emailAddress);
+    public void updateUser(@RequestBody UpdateUser request, @PathVariable("id") Long id) {
+        UserService.updateUser(id, request.firstName, request.lastName, request.password, request.email);
     }
 
 
