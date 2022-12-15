@@ -28,7 +28,7 @@ public class ItemController {
     }
 
     @GetMapping(path = "category/{category}")
-    public String getItemByCategory(@PathVariable("category") String category){
+    public List<Item> getItemByCategory(@PathVariable("category") String category){
         return itemService.getItemByCategory(category);
     }
     @PostMapping

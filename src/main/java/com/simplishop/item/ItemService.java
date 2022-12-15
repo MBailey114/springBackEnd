@@ -22,9 +22,9 @@ public class ItemService {
     {
         return itemRepository.findById(itemId);
     }
-    public String getItemByCategory(String category){
-//        Optional<Item> itemOptional = itemRepository.findItembyCategory(category);
-        return category;
+    public List<Item> getItemByCategory(String category){
+        List<Item> itemOptional = itemRepository.findAllByCategory(category);
+        return itemOptional;
     }
     public void addNewItem(Item item){
         itemRepository.save(item);
