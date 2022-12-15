@@ -18,9 +18,9 @@ public class ItemService {
     {
         return itemRepository.findAll();
     }
-    public String getItemById(Long itemId)
+    public Optional<Item> getItemById(Long itemId)
     {
-        return String.valueOf(itemRepository.findById(itemId));
+        return itemRepository.findById(itemId);
     }
     public String getItemByCategory(String category){
 //        Optional<Item> itemOptional = itemRepository.findItembyCategory(category);

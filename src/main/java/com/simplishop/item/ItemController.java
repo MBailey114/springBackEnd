@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 @RestController
@@ -21,8 +22,8 @@ public class ItemController {
         return itemService.getItems();
     }
 
-    @GetMapping(path = "{itemId}")
-    public String getItemById(@PathVariable("itemId") Long itemId){
+    @GetMapping(path = "item/{itemId}")
+    public Optional<Item> getItemById(@PathVariable("itemId") Long itemId){
         return itemService.getItemById(itemId);
     }
 
