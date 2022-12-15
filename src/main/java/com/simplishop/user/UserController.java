@@ -29,7 +29,7 @@ public class UserController {
 
     @PostMapping
     public void addUser(@RequestBody NewUser request){
-        UserEntity user = new UserEntity("","","","");
+        UserEntity user = new UserEntity();
         user.setFirstName(request.firstName());
         user.setLastName(request.lastName());
         user.setPassword(request.password());

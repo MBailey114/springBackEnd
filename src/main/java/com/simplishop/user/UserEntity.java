@@ -4,12 +4,18 @@ package com.simplishop.user;
 
 import com.simplishop.security.Role;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
+@Data
+@NoArgsConstructor
 public class UserEntity {
 
     // Create an id in ascending order
@@ -37,6 +43,7 @@ public class UserEntity {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles = new ArrayList<>();
+
     // Add many-to-many relationship with Items
 
     // private List<Item> wishlist;
@@ -51,10 +58,6 @@ public class UserEntity {
         this.emailAddress = emailAddress;
     }
 
-//    NOTHING CONSTRUCTOR
-    public UserEntity() {
-
-    }
 
 //    ID CONSTRUCTOR
 public UserEntity(Long id, String firstName, String lastName, String password, String emailAddress) {
@@ -107,5 +110,9 @@ public UserEntity(Long id, String firstName, String lastName, String password, S
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
     }
 }
