@@ -2,14 +2,15 @@ package com.simplishop.user;
 
 
 
+import com.simplishop.security.Role;
 import jakarta.persistence.*;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
 
     // Create an id in ascending order
     @Id
@@ -32,6 +33,10 @@ public class User {
 
     private String emailAddress;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles = new ArrayList<>();
     // Add many-to-many relationship with Items
 
     // private List<Item> wishlist;
@@ -39,7 +44,7 @@ public class User {
 
 
 //    NO ID CONSTRUCTOR
-    public User(String firstName, String lastName, String password, String emailAddress) {
+    public UserEntity(String firstName, String lastName, String password, String emailAddress) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -47,12 +52,12 @@ public class User {
     }
 
 //    NOTHING CONSTRUCTOR
-    public User() {
+    public UserEntity() {
 
     }
 
 //    ID CONSTRUCTOR
-public User( Long id, String firstName, String lastName, String password, String emailAddress) {
+public UserEntity(Long id, String firstName, String lastName, String password, String emailAddress) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;

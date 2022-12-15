@@ -2,7 +2,6 @@ package com.simplishop.user;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +18,7 @@ public class UserController {
 
 
     @GetMapping
-    public List<User> getUser(){
+    public List<UserEntity> getUser(){
         return userService.getUsers();
     }
 
@@ -30,7 +29,7 @@ public class UserController {
 
     @PostMapping
     public void addUser(@RequestBody NewUser request){
-        User user = new User("","","","");
+        UserEntity user = new UserEntity("","","","");
         user.setFirstName(request.firstName());
         user.setLastName(request.lastName());
         user.setPassword(request.password());

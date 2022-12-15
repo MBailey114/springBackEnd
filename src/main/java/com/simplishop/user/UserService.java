@@ -1,6 +1,5 @@
 package com.simplishop.user;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,13 +17,13 @@ public class UserService {
 
 //    **IN PROGRESS**
     public static void updateUser(Long id, Optional<String> firstName, Optional<String> lastName, Optional<String> password, Optional<String> emailAddress) {
-        Optional<User> optionalUser = userRepo.findById(id);
+        Optional<UserEntity> optionalUser = userRepo.findById(id);
 
        if(optionalUser.isEmpty()) {
            return;
        }
 
-       User user = optionalUser.get();
+       UserEntity user = optionalUser.get();
 
        user.setFirstName(firstName.isPresent() ? firstName.get() : user.getFirstName());
         user.setLastName(lastName.isPresent() ? lastName.get() : user.getLastName());
@@ -46,12 +45,12 @@ public class UserService {
     }
 
 
-    public List<User> getUsers() {
+    public List<UserEntity> getUsers() {
         return userRepo.findAll();
     }
 
 //    SAVING A USER
-    public void addNewUser(User user) {
+    public void addNewUser(UserEntity user) {
         userRepo.save(user);
     }
 
