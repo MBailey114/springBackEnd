@@ -41,14 +41,11 @@ public class ItemController {
     {
         itemService.deleteItem(itemId);
     }
+
+    record UpdateItem(Optional<String> name, Optional<String> image, Optional<String> description, Optional<String> category, Optional<Integer> quantity, Optional<Double> price){};
+
     @PutMapping(path = "{itemId}")
-    public void updateItem(@PathVariable("itemId") Long itemId,
-                           @PathVariable(required = false) String name,
-                           @PathVariable(required = false) String image,
-                           @PathVariable(required = false) String description,
-                           @PathVariable(required = false) String category,
-                           @PathVariable(required = false) Integer quantity,
-                           @PathVariable(required = false) Double price){
-        itemService.editItem(itemId, name, image,description, category,quantity, price);
+    public void updateItem(@RequestBody UpdateItem request, @PathVariable("itemId") Long itemId){
+        itemService.editItem(itemId, request.name, request.image, request.description, request.category, request.quantity, request.price);
     }
 }

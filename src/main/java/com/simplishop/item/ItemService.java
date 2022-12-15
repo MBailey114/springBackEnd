@@ -34,32 +34,20 @@ public class ItemService {
         itemRepository.deleteById(itemId);
     }
 
-    public void editItem(Long itemId,String name,String image,String description,String category,Integer quantity,Double price){
-        Item item = itemRepository.findById(itemId).orElseThrow(() -> new IllegalStateException(
-                "Item with id " + itemId + " does not exist"));
-        if(name != null && name.length() > 0)
-        {
-            item.setName(name);
+    public void editItem(Long itemId, Optional<String> name, Optional<String> image, Optional<String> description, Optional<String> category, Optional<Integer> quantity, Optional<Double> price){
+        Optional<Item> optionalItem = itemRepository.findItemById(itemId);
+        if(optionalItem.isEmpty()) {
+            return;
         }
-        if(image != null && image.length() > 0)
-        {
-            item.setImage(image);
-        }
-        if(description != null && description.length() > 0)
-        {
-            item.setDescription(description);
-        }
-        if(category != null && category.length() > 0)
-        {
-            item.setCategory(category);
-        }
-        if(quantity != null && quantity >= 0)
-        {
-            item.setQuantity(quantity);
-        }
-        if(price != null && price >= 0)
-        {
-            item.setPrice(price);
-        }
+
+        Item item = optionalItem.get();
+
+        item.setName(name.isPresent() ? name.get() : item.getName());
+        item.setImage(image.isPresent() ? image.get() : item.getImage());
+        item.setDescription(description.isPresent() ? description.get() : item.getDescription());
+        item.setCategory(category.isPresent() ? category.get() : item.getDescription());
+        item.setQuantity(quantity.isPresent() ? quantity.get() : item.getQuantity());
+        item.setPrice(price.isPresent() ? price.get() : item.getPrice());
+        itemRepository.save(item);
     }
 }
