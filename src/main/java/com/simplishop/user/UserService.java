@@ -37,15 +37,10 @@ public class UserService {
         return userRepo.findAll();
     }
 
-//    public void addNewUser(User user) {
-//        Optional<User> userOptional = studentRepository
-//                .findUserByEmail(user.getEmail());
-//        if (userOptional.isPresent())
-//        {
-//            throw new IllegalStateException("email taken");
-//        }
-//        userRepo.save(user);
-//    }
+//    SAVING A USER
+    public void addNewUser(User user) {
+        userRepo.save(user);
+    }
 
 
 
