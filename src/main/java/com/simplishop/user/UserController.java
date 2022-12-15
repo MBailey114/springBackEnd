@@ -7,11 +7,11 @@ import java.util.List;
 @SpringBootApplication
 @RestController
 @RequestMapping(path = "shop/user")
-public class userController{
+public class UserController {
 
     private final UserRepository userRepo;
 
-    public userController(UserRepository userRepo) {
+    public UserController(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
 

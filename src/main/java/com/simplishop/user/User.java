@@ -8,6 +8,7 @@ import java.lang.reflect.Array;
 import java.util.List;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     // Create an id in ascending order
