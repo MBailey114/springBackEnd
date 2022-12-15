@@ -2,9 +2,10 @@ package com.simplishop.user;
 
 
 
+import com.simplishop.security.Role;
 import jakarta.persistence.*;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,6 +33,10 @@ public class User {
 
     private String emailAddress;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles = new ArrayList<>();
     // Add many-to-many relationship with Items
 
     // private List<Item> wishlist;
