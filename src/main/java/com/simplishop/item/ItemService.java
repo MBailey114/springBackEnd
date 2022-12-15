@@ -23,7 +23,7 @@ public class ItemService {
         return String.valueOf(itemRepository.findById(itemId));
     }
     public String getItemByCategory(String category){
-        Optional<Item> itemOptional = itemRepository.findItemsbyCategory(category);
+//        Optional<Item> itemOptional = itemRepository.findItembyCategory(category);
         return category;
     }
     public void addNewItem(Item item){
