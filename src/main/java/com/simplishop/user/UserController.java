@@ -9,16 +9,16 @@ import java.util.List;
 @RequestMapping(path = "shop/user")
 public class UserController {
 
-    private final UserRepository userRepo;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepo) {
-        this.userRepo = userRepo;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
 
     @GetMapping
     public List<User> getUser(){
-        return userRepo.findAll();
+        return userService.getUsers();
     }
 
 
@@ -31,7 +31,7 @@ public class UserController {
         user.setPassword(request.password());
         user.setEmailAddress(request.email());
 
-        userRepo.save(user);
+        userService.addNewUser(user);
     }
 
     @PutMapping(path = "{id}")
