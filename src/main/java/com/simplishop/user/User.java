@@ -37,7 +37,23 @@ public class User {
     // private List<Item> basket;
 
 
+    //    NOTHING CONSTRUCTOR
+    public User () {
+
+    }
+
+//    CONSTRUCTOR WITH NO ID
     public User(String firstName, String lastName, String password, String emailAddress) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.emailAddress = emailAddress;
+    }
+
+
+//    CONSTRUCTOR WITH ID
+    public User (Long id,String firstName, String lastName, String password, String emailAddress ) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
