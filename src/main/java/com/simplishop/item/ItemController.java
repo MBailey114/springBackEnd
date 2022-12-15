@@ -22,12 +22,12 @@ public class ItemController {
         return itemService.getItems();
     }
 
-    @GetMapping(path = "item/{itemId}")
+    @GetMapping(path = "{itemId}")
     public Optional<Item> getItemById(@PathVariable("itemId") Long itemId){
         return itemService.getItemById(itemId);
     }
 
-    @GetMapping(path = "{category}")
+    @GetMapping(path = "category/{category}")
     public String getItemByCategory(@PathVariable("category") String category){
         return itemService.getItemByCategory(category);
     }
