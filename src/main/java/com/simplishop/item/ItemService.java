@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.List;
+import com.simplishop.item.exception.NoItemFoundException;
 @Service
 public class ItemService {
 
@@ -37,7 +38,7 @@ public class ItemService {
     public void editItem(Long itemId, Optional<String> name, Optional<String> image, Optional<String> description, Optional<String> category, Optional<Integer> quantity, Optional<Double> price){
         Optional<Item> optionalItem = itemRepository.findItemById(itemId);
         if(optionalItem.isEmpty()) {
-            return;
+            throw new NoItemFoundException();
         }
 
         Item item = optionalItem.get();
