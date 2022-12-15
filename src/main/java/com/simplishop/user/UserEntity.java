@@ -44,7 +44,7 @@ public class UserEntity {
 
 
 //    NO ID CONSTRUCTOR
-    public User(String firstName, String lastName, String password, String emailAddress) {
+    public UserEntity(String firstName, String lastName, String password, String emailAddress) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -52,12 +52,12 @@ public class UserEntity {
     }
 
 //    NOTHING CONSTRUCTOR
-    public User() {
+    public UserEntity() {
 
     }
 
 //    ID CONSTRUCTOR
-public User( Long id, String firstName, String lastName, String password, String emailAddress) {
+public UserEntity(Long id, String firstName, String lastName, String password, String emailAddress) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;

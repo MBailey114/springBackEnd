@@ -12,13 +12,13 @@ public class UserConfig {
     CommandLineRunner commandLineRunnerUser(
             UserRepository userRepository) {
         return args -> {
-            User user1 = new User(
+            UserEntity user1 = new UserEntity(
                     "Joe",
                     "Bloggs",
                     "abc123",
                     "joebloggs@email.com"
             );
-            User user2 = new User(
+            UserEntity user2 = new UserEntity(
                     "John",
                     "Doe",
                     "abc123",
