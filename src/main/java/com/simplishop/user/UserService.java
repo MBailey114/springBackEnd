@@ -17,8 +17,21 @@ public class UserService {
     }
 
 //    **IN PROGRESS**
-    public static void updateUser(Long id, String firstName, String lastName, String password, String emailAddress) {
+    public static void updateUser(Long id, Optional<String> firstName, Optional<String> lastName, Optional<String> password, Optional<String> emailAddress) {
+        Optional<User> optionalUser = userRepo.findById(id);
 
+       if(optionalUser.isEmpty()) {
+           return;
+       }
+
+       User user = optionalUser.get();
+
+       user.setFirstName(firstName.isPresent() ? firstName.get() : user.getFirstName());
+        user.setLastName(lastName.isPresent() ? lastName.get() : user.getLastName());
+        user.setPassword(password.isPresent() ? password.get() : user.getPassword());
+        user.setEmailAddress(emailAddress.isPresent() ? emailAddress.get() : user.getEmailAddress());
+
+        userRepo.save(user);
 
     }
 
