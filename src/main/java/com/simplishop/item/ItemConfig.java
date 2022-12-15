@@ -30,7 +30,7 @@ public class ItemConfig {
             );
             Item item3 = new Item(
                     "Book",
-                    "https://commons.wikimedia.org/wiki/File:Book.png",
+                    "https://shadycharacters.co.uk/wp/wp-content/uploads/2016/12/Book_IMG_1754-1-e1481474081467.jpg",
                     "A book is a medium for recording information in the form of writing or images",
                     "Education",
                     1,
@@ -38,7 +38,7 @@ public class ItemConfig {
             );
             Item item4 = new Item(
                     "Phone",
-                    "https://commons.wikimedia.org/wiki/File:Phone.png",
+                    "https://www.three.co.uk/cs/Satellite?blobkey=id&blobwhere=1401331509853&blobcol=urldata&blobtable=MungoBlobs",
                     "A phone is a device used for communication and messaging.",
                     "Technology",
                     1,
@@ -46,7 +46,7 @@ public class ItemConfig {
             );
             Item item5 = new Item(
                     "Clothing",
-                    "https://commons.wikimedia.org/wiki/File:Clothing.png",
+                    "https://expertreviews.b-cdn.net/sites/expertreviews/files/styles/er_main_wide/public/2019/08/best_online_clothes_shops.jpg?itok=L8unGI0O",
                     "Clothing is a type of protective layer worn by humans for warmth or fashion",
                     "Fashion",
                     1,
@@ -54,7 +54,7 @@ public class ItemConfig {
             );
             Item item6 = new Item(
                     "Toy",
-                    "https://commons.wikimedia.org/wiki/File:Toy.png",
+                    "https://www.ikea.com/gb/en/images/products/blavingad-soft-toy-blue-whale__1107939_pe869237_s5.jpg?f=s",
                     "A toy is an object used for play or entertainment",
                     "Entertainment",
                     1,
