@@ -43,7 +43,8 @@ public class AuthController {
     @PostMapping("login")
     public ResponseEntity<AuthResponseDTO> login (@RequestBody LoginDTO loginDTO){
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.getEmail(),
+                    new UsernamePasswordAuthenticationToken(
+                            loginDTO.getEmail(),
                         loginDTO.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
@@ -53,6 +54,9 @@ public class AuthController {
     @PostMapping("register")
 //    SETTING UP JSON SO WE DON'T PASS ANY PASSWORDS IN URL STRING
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO){
+        System.out.println("Test user email is present");
+        System.out.println(userRepository.existsByEmailAddress(registerDTO.getEmail()));
+        System.out.println(registerDTO.getEmail());
         if(userRepository.existsByEmailAddress(registerDTO.getEmail())){
             return new ResponseEntity<>("Email is already in use", HttpStatus.BAD_REQUEST);
         }
@@ -62,8 +66,11 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode((registerDTO.getPassword())));
 
 //        DEFAULT ROLE = USER
-        Role roles = roleRepository.findByName("USER").get();
-        user.setRoles(Collections.singletonList(roles));
+        System.out.println("Debug: ");
+
+        System.out.println(roleRepository.findByName("USER").isPresent());
+         Role roles = roleRepository.findByName("USER").get();
+         user.setRoles(Collections.singletonList(roles));
 
         userRepository.save(user);
 

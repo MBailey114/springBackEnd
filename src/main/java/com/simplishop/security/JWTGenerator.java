@@ -3,7 +3,7 @@ package com.simplishop.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ import java.util.Date;
 @Component
 public class JWTGenerator {
     public String generateToken(Authentication authentication) {
-        String emailAddress = authentication.getEmailAddress();
+        String emailAddress = authentication.getName();
         Date currentDate = new Date();
         Date expiryDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
 

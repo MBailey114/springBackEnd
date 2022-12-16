@@ -11,11 +11,13 @@ import lombok.Setter;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String name;
 
     public Role(String name) {
         this.name = name;
     }
+
+    public Role() {}
 }

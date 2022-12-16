@@ -33,20 +33,20 @@ public class SecurityConfig {
     }
 
 //    THIS WILL OVERWRITE OUR CUSTOM USER DETAILS LOGIN SERVICE
-//    @Bean
-//    public UserDetailsService users(){
-//        UserDetails admin = User.builder()
-//                .username("admin")
-//                .password("password")
-//                .roles("ADMIN")
-//                .build();
-//        UserDetails user1  = User.builder()
-//                .username("user")
-//                .password("password")
-//                .roles("USER")
-//                .build();
-//        return new InMemoryUserDetailsManager(admin,user1);
-//    }
+    @Bean
+    public UserDetailsService users(){
+        UserDetails admin = User.builder()
+                .username("admin")
+                .password("password")
+                .roles("ADMIN")
+                .build();
+        UserDetails user1  = User.builder()
+                .username("user")
+                .password("password")
+                .roles("USER")
+                .build();
+        return new InMemoryUserDetailsManager(admin,user1);
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
