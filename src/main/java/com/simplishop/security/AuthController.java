@@ -51,24 +51,23 @@ public class AuthController {
         return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
     }
 
-    @PostMapping("register")
+
 //    SETTING UP JSON SO WE DON'T PASS ANY PASSWORDS IN URL STRING
+    @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO){
-        System.out.println("Test user email is present");
-        System.out.println(userRepository.existsByEmailAddress(registerDTO.getEmail()));
-        System.out.println(registerDTO.getEmail());
-        if(userRepository.existsByEmailAddress(registerDTO.getEmail())){
+        System.out.println("DTO data: ");
+        System.out.println(registerDTO);
+        if(userRepository.existsByEmailAddress(registerDTO.getEmailAddress())){
             return new ResponseEntity<>("Email is already in use", HttpStatus.BAD_REQUEST);
         }
 
         UserEntity user = new UserEntity();
-        user.setEmailAddress(registerDTO.getEmail());
+        user.setEmailAddress(registerDTO.getEmailAddress());
         user.setPassword(passwordEncoder.encode((registerDTO.getPassword())));
+        user.setFirstName(registerDTO.getFirstName());
+        user.setLastName(registerDTO.getLastName());
 
 //        DEFAULT ROLE = USER
-        System.out.println("Debug: ");
-
-        System.out.println(roleRepository.findByName("USER").isPresent());
          Role roles = roleRepository.findByName("USER").get();
          user.setRoles(Collections.singletonList(roles));
 
