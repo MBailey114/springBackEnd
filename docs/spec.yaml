@@ -1,0 +1,361 @@
+openapi: 3.0.3
+info:
+  title: SimpliShop API
+  description: |-
+    This is the documentation for the API for the simplishop project
+  version: 1.0.0
+servers:
+  - url: "http://localhost:8080"
+tags:
+  - name: item
+    description: Access information about items
+  - name: user
+    description: Access information about the user
+paths:
+  /shop/user/:
+    get:
+      tags:
+        - user
+      summary: Get all users
+      description: Get all users in the database
+      operationId: getAllUsers
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref : "#/components/schemas/NewUser"
+
+    post:
+      tags:
+        - user
+      summary: Create a new user
+      description: Create a new user
+      operationId: createUser
+      requestBody:
+        description: Create a new user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+        required: true
+      responses:
+        201:
+          description: Successfully created new user
+        400:
+          description: Invalid body
+
+  /shop/user/{userID}:
+    get:
+      tags:
+        - user
+      summary: Get one existing user
+      description: Get one user by id
+      operationId: getOneUser
+      parameters:
+        - name: userID
+          in: path
+          description: ID of user to return
+          required: true
+          example: 2
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successfully got user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+        - user
+      summary: Update an existing user
+      description: Update an existing user by ID
+      operationId: updateUser
+      parameters:
+        - name: userID
+          in: path
+          description: ID of user to return
+          required: true
+          example: 2
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Update a user in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+        required: true
+      responses:
+        '200':
+          description: Successfully updated user
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - user
+      summary: Update an existing user
+      description: Delete existing user by ID
+      operationId: deleteUser
+      parameters:
+        - name: userID
+          in: path
+          description: ID of user to return
+          required: true
+          example: 2
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successfully deleted user
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /shop/item/:
+    get:
+      tags:
+        - item
+      summary: Get all items
+      description: Get all items in the database
+      operationId: getAllItems
+      responses:
+        200:
+          description: Successful
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref : "#/components/schemas/Item"
+
+    post:
+      tags:
+        - item
+      summary: Create a new item
+      description: Create a new item
+      operationId: createItem
+      requestBody:
+        description: Create a new item
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewItem'
+        required: true
+      responses:
+        201:
+          description: Successfully created new item
+        400:
+          description: Invalid body
+  /shop/item/{itemID}:
+    get:
+      tags:
+        - item
+      summary: Get one existing item
+      description: Get one item by id
+      operationId: getOneItem
+      parameters:
+        - name: itemID
+          in: path
+          description: ID of item to return
+          required: true
+          example: 2
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successfully got item
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      tags:
+        - item
+      summary: Update an existing item
+      description: Update an existing item by ID
+      operationId: updateItem
+      parameters:
+        - name: itemID
+          in: path
+          description: ID of item to return
+          required: true
+          example: 2
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Update a item in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewItem'
+        required: true
+      responses:
+        '200':
+          description: Successfully updated item
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      tags:
+        - item
+      summary: Update an existing item
+      description: Delete existing item by ID
+      operationId: deleteItem
+      parameters:
+        - name: itemID
+          in: path
+          description: ID of item to return
+          required: true
+          example: 2
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successfully deleted item
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    NewUser:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        password:
+          type: string
+          format: password
+          example: qwerty
+        email:
+          type: string
+          example: john@example.com
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        password:
+          type: string
+          format: password
+          example: qwerty
+        email:
+          type: string
+          example: john@example.com
+
+    Item:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        name:
+          type: string
+          example: Example product
+        image:
+          type: string
+          example: https://example.com/example-image.png
+        description:
+          type: string
+          example: This item is very good
+        quantity:
+          type: integer
+          example: 1
+        price:
+          type: number
+          example: 5.00
+    NewItem:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Example product
+        image:
+          type: string
+          example: https://example.com/example-image.png
+        description:
+          type: string
+          example: This item is very good
+        quantity:
+          type: integer
+          example: 1
+        price:
+          type: number
+          example: 5.00
+
+    ErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          example: 2022-12-15T15:17:46.702+00:00
+        status:
+          type: integer
+          example: 404
+        error:
+          type: string
+          example: Not Found
+        path:
+          type: string
+          example: /shop/item/600
