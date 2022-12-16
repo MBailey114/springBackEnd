@@ -15,7 +15,6 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-//    **IN PROGRESS**
     public static void updateUser(Long id, Optional<String> firstName, Optional<String> lastName, Optional<String> password, Optional<String> emailAddress) {
         Optional<UserEntity> optionalUser = userRepo.findById(id);
 
