@@ -1,6 +1,10 @@
 package com.simplishop.security;
 
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTCreator;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
 import com.simplishop.user.UserEntity;
 import com.simplishop.user.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -31,12 +35,12 @@ public class AuthController {
 
 //    CONSTRUCTOR
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator) {
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder /*,JWTGenerator jwtGenerator */) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-        this.jwtGenerator = jwtGenerator;
+//        this.jwtGenerator = jwtGenerator;
     }
 
 //    LOGIN ENDPOINT THAT WILL ALLOW A USER TO LOG IN AND STORE THEIR DETAILS
@@ -47,8 +51,8 @@ public class AuthController {
                             loginDTO.getEmail(),
                         loginDTO.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtGenerator.generateToken(authentication);
-        return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
+         String token = jwtGenerator.generateToken(authentication);
+        return new ResponseEntity<AuthResponseDTO>(new AuthResponseDTO(token), HttpStatus.BAD_REQUEST);
     }
 
 

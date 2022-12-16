@@ -27,12 +27,12 @@ public class SecurityConfig {
     private CustomUserDetailsService userDetailsService;
 
     @Autowired
-    public SecurityConfig(CustomUserDetailsService userDetailsService, JwtAuthEntryPoint authEntryPoint) {
+    public SecurityConfig(CustomUserDetailsService userDetailsService /*,JwtAuthEntryPoint authEntryPoint*/) {
         this.userDetailsService = userDetailsService;
         this.authEntryPoint = authEntryPoint;
     }
 
-//    THIS WILL OVERWRITE OUR CUSTOM USER DETAILS LOGIN SERVICE
+    //THIS WILL OVERWRITE OUR CUSTOM USER DETAILS LOGIN SERVICE
     @Bean
     public UserDetailsService users(){
         UserDetails admin = User.builder()
