@@ -16,7 +16,7 @@ public class ItemConfig {
                     "game boy",
                     "https://upload.wikimedia.org/wikipedia/commons/f/f4/Game-Boy-FL.jpg",
                     "1990s games console from Nintendo",
-                    "technology",
+                    "Technology",
                     5,
                     20.00
             );
@@ -24,7 +24,7 @@ public class ItemConfig {
                     "scooter",
                     "https://www.laptopsdirect.co.uk/Images/E-SC10-V1_1_Supersize.jpg?v=61",
                     "electric scooter",
-                    "toys",
+                    "Toys",
                     5,
                     12.99
             );
@@ -60,8 +60,56 @@ public class ItemConfig {
                     1,
                     9.99
             );
+            Item item7 = new Item(
+                    "Laptop",
+                    "https://m.media-amazon.com/images/I/711jgF2LHPL._AC_SY450_.jpg",
+                    "A high-performance laptop with a sleek design and powerful processor",
+                    "Technology",
+                    10,
+                    1000.00
+            );
+            Item item8 = new Item(
+                    "Bookshelf",
+                    "https://www.therange.co.uk/_m3/8/2/1465382547_829.jpg",
+                    "A sturdy bookshelf made of solid wood",
+                    "Home",
+                    5,
+                    150.00
+            );
+            Item item9 = new Item(
+                    "Portable Speaker",
+                    "https://m.media-amazon.com/images/I/810dSwE0MoL._AC_SL1500_.jpg",
+                    "A portable Bluetooth speaker with excellent sound quality",
+                    "Technology",
+                    15,
+                    50.00
+            );
+            Item item10 = new Item(
+                    "Painting",
+                    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/1200px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg",
+                    "A beautiful landscape painting by a local artist",
+                    "Home",
+                    3,
+                    200.00
+            );
+            Item item11 = new Item(
+                    "Sneakers",
+                    "https://www.chloe.com/product_image/11596937jh/f/w1080.jpg",
+                    "A pair of comfortable and stylish sneakers",
+                    "Fashion",
+                    20,
+                    75.00
+            );
+            Item item12 = new Item(
+                    "Office Chair",
+                    "https://www.ikea.com/gb/en/images/products/flintan-office-chair-with-armrests-black__1007241_pe825960_s5.jpg",
+                    "An ergonomic office chair with adjustable lumbar support",
+                    "Home",
+                    10,
+                    150.00
+            );
             itemRepository.saveAll(
-                    List.of(item1, item2, item3, item4, item5, item6));
+                    List.of(item1, item2, item3, item4, item5, item6,item7, item8, item9, item10, item11, item12));
         };
     }
 }
