@@ -4,6 +4,9 @@ package com.simplishop.security;
 //HAVING A CENTRALISED PLACE TO CHANGE THESE
 //REFERENCED IN JWT GENERATOR
 public class SecurityConstants {
-    public static final long JWT_EXPIRATION = 70000;
+
+    // ms to expire in 1000 * 60 * 60 * 24 ms = 1 day
+    //
+    public static final long JWT_EXPIRATION = 1000*60*60*24;
     public static final String JWT_SECRET = "JzAPk7jKJmYRuhYTFiS2JzAPk7jKJmYRuhYTFiS2JzAPk7jKJmYRuhYTFiS2JzAPk7jKJmYRuhYTFiS2JzAPk7jKJmYRuhYTFiS2JzAPk7jKJmYRuhYTFiS2JzAPk7jKJmYRuhYTFiS2JzAPk7jKJmYRuhYTFiS2";
 }
