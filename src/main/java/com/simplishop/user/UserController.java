@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @SpringBootApplication
 @RestController
 @RequestMapping(path = "shop/user")
