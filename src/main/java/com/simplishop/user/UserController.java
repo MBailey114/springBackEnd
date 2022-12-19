@@ -1,6 +1,7 @@
 package com.simplishop.user;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,13 @@ public class UserController {
     @GetMapping
     public List<UserEntity> getUser(){
         return userService.getUsers();
+    }
+
+    // GET /shop/user/me
+    // Get the current user
+    @GetMapping (path = "me")
+    public UserEntity getCurrentUser(Authentication authentication){
+        return userService.getCurrentUser(authentication);
     }
 
     @GetMapping(path = "wishlist/{id}")

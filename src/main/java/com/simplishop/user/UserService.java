@@ -1,6 +1,7 @@
 package com.simplishop.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -65,6 +66,13 @@ public class UserService {
 
     public List<UserEntity> getUsers() {
         return userRepo.findAll();
+    }
+    public UserEntity getCurrentUser(Authentication authentication) {
+        Optional<UserEntity> currentUser = userRepo.findByEmailAddress(authentication.getName());
+        if(currentUser.isEmpty()) {
+            return null;
+        }
+        return currentUser.get();
     }
 
     public List<Integer> getUsersWishlist(Long id)
