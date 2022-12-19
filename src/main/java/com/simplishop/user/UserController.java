@@ -1,4 +1,5 @@
 package com.simplishop.user;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +23,13 @@ public class UserController {
         return userService.getUsers();
     }
 
+    @GetMapping(path = "wishlist/{id}")
+    public List<Integer> getUserWishlist(@PathVariable("id") Long id){
+        return userService.getUsersWishlist(id);
+    }
 
     record NewUser(String firstName, String lastName, String password, String email){};
+    record UpdateUserArray(Integer itemId){};
 
     record UpdateUser(Optional<String> firstName, Optional<String> lastName, Optional<String> password, Optional<String> email){};
 
@@ -40,6 +46,11 @@ public class UserController {
     @PutMapping(path = "{id}")
     public void updateUser(@RequestBody UpdateUser request, @PathVariable("id") Long id) {
         UserService.updateUser(id, request.firstName, request.lastName, request.password, request.email);
+    }
+
+    @PutMapping(path = "wishlist/{id}")
+    public void addUserArray(@RequestBody UpdateUserArray request, @PathVariable("id") Long id) {
+        UserService.addToUserArray(id, request.itemId);
     }
 
 

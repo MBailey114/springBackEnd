@@ -30,7 +30,26 @@ public class UserService {
         user.setEmailAddress(emailAddress.isPresent() ? emailAddress.get() : user.getEmailAddress());
 
         userRepo.save(user);
+    }
 
+    public static void addToUserArray(Long id, Integer wishlist) {
+        Optional<UserEntity> optionalUser = userRepo.findById(id);
+        if(optionalUser.isEmpty()) {
+            return;
+        }
+        UserEntity user = optionalUser.get();
+        List<Integer> wishlistarray = user.getWishlist();
+        for(int i = 0; i < wishlistarray.toArray().length; i++)
+        {
+            if(wishlistarray.toArray()[i] == wishlist)
+            {
+                user.removeFromWishlist(wishlist);
+                userRepo.save(user);
+                return;
+            }
+        }
+        user.addToWishlist(wishlist);
+        userRepo.save(user);
     }
 
     public static void deleteUser(Long id) {
@@ -48,7 +67,18 @@ public class UserService {
         return userRepo.findAll();
     }
 
-//    SAVING A USER
+    public List<Integer> getUsersWishlist(Long id)
+    {
+        Optional<UserEntity> optionalUser = userRepo.findById(id);
+        if(optionalUser.isEmpty()) {
+            throw new IllegalStateException("user with id " + id + " does not exist");
+        }
+        UserEntity user = optionalUser.get();
+        return user.getWishlist();
+    }
+
+
+    //    SAVING A USER
     public void addNewUser(UserEntity user) {
         userRepo.save(user);
     }

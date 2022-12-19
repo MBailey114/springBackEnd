@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -16,13 +17,15 @@ public class UserConfig {
                     "Joe",
                     "Bloggs",
                     "abc123",
-                    "joebloggs@email.com"
+                    "joebloggs@email.com",
+                    new ArrayList<Integer>()
             );
             UserEntity user2 = new UserEntity(
                     "John",
                     "Doe",
                     "abc123",
-                    "johndoe@email.com"
+                    "johndoe@email.com",
+                    new ArrayList<Integer>()
             );
             userRepository.saveAll(
                     List.of(user1, user2));

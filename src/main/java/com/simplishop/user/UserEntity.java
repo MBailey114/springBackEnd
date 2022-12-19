@@ -38,7 +38,7 @@ public class UserEntity {
     private String password;
 
     private String emailAddress;
-
+    private List<Integer> wishlist;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
@@ -51,21 +51,23 @@ public class UserEntity {
 
 
 //    NO ID CONSTRUCTOR
-    public UserEntity(String firstName, String lastName, String password, String emailAddress) {
+    public UserEntity(String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.emailAddress = emailAddress;
+        this.wishlist = wishlist;
     }
 
 
 //    ID CONSTRUCTOR
-public UserEntity(Long id, String firstName, String lastName, String password, String emailAddress) {
+public UserEntity(Long id, String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.password = password;
     this.emailAddress = emailAddress;
+    this.wishlist = wishlist;
 }
 
 
@@ -115,4 +117,16 @@ public UserEntity(Long id, String firstName, String lastName, String password, S
     public List<Role> getRoles() {
         return roles;
     }
+
+    public List<Integer> getWishlist() {
+        return wishlist;
+    }
+    public void addToWishlist(Integer itemId) {
+        this.wishlist.add(itemId);
+    }
+    public void removeFromWishlist(Integer itemId)
+    {
+        this.wishlist.remove(itemId);
+    }
+
 }
