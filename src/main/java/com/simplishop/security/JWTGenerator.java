@@ -59,17 +59,20 @@ public class JWTGenerator {
         DecodedJWT decodedJWT;
         try{
             Algorithm algorithm = Algorithm.HMAC512(SecurityConstants.JWT_SECRET);
-            JWTVerifier verifier = JWT.require(algorithm)
-                    // specify an specific claim validations
-                    .withIssuer("auth0")
-                    // reusable verifier instance
-                    .build();
+            // reusable verifier instance
+            JWTVerifier verifier = JWT.require(algorithm).build();
+
+
 
             decodedJWT = verifier.verify(token);
-            Jwts.parser().setSigningKey(SecurityConstants.JWT_SECRET).parseClaimsJws(token);
+            System.out.println("Decoded jwt");
+            System.out.println(decodedJWT);
+            //Jwts.parser().setSigningKey(SecurityConstants.JWT_SECRET).parseClaimsJws(token);
             return true;
         } catch (Exception ex) {
-            throw new AuthenticationCredentialsNotFoundException("JWR was expired or incorrect");
+            System.out.println(ex);
+            return false;
+            //throw new AuthenticationCredentialsNotFoundException("JWR was expired or incorrect");
         }
     }
 }

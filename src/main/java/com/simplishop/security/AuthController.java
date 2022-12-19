@@ -35,23 +35,31 @@ public class AuthController {
 
 //    CONSTRUCTOR
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder /*,JWTGenerator jwtGenerator */) {
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
-//        this.jwtGenerator = jwtGenerator;
+        this.jwtGenerator = jwtGenerator;
     }
 
 //    LOGIN ENDPOINT THAT WILL ALLOW A USER TO LOG IN AND STORE THEIR DETAILS
     @PostMapping("login")
     public ResponseEntity<AuthResponseDTO> login (@RequestBody LoginDTO loginDTO){
+        System.out.println(0);
+        System.out.println(loginDTO.getEmail());
+        System.out.println(loginDTO.getPassword());
+
         Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginDTO.getEmail(),
                         loginDTO.getPassword()));
+        System.out.println(1);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        System.out.println(2);
          String token = jwtGenerator.generateToken(authentication);
+        System.out.println("TOken");
+        System.out.println(token);
         return new ResponseEntity<AuthResponseDTO>(new AuthResponseDTO(token), HttpStatus.BAD_REQUEST);
     }
 
