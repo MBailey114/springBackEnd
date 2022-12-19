@@ -18,6 +18,7 @@ public class ItemService {
     {
         return itemRepository.findAll();
     }
+
     public Optional<Item> getItemById(Long itemId)
     {
         return itemRepository.findById(itemId);

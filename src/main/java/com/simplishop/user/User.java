@@ -4,7 +4,10 @@ import com.simplishop.item.Item;
 import jakarta.persistence.*;
 
 import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 @Entity
 @Table(name = "users")
@@ -33,12 +36,12 @@ public class User {
 
     // Add many-to-many relationship with Items
 
-     private List<String> wishlist;
+     private List<Integer> wishlist;
     // private List<Item> basket;
 
 
 //    NO ID CONSTRUCTOR
-    public User(String firstName, String lastName, String password, String emailAddress, List<String> wishlist) {
+    public User(String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -55,13 +58,13 @@ public class User {
 
 
     //    ID CONSTRUCTOR
-    public User(Long id, String firstName, String lastName, String password, String emailAddress, List<String> wishlist) {
+    public User(Long id, String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.emailAddress = emailAddress;
-        this.wishlist = wishlist;
+
     }
 
     public Long getId() {
@@ -104,11 +107,15 @@ public class User {
         this.emailAddress = emailAddress;
     }
 
-    public List<String> getWishlist() {
+    public List<Integer> getWishlist() {
         return wishlist;
     }
 
-    public void setWishlist(List<String> wishlist) {
-        this.wishlist = wishlist;
+    public void addToWishlist(Integer itemId) {
+        this.wishlist.add(itemId);
+    }
+    public void removeFromWishlist(Integer itemId)
+    {
+        this.wishlist.remove(itemId);
     }
 }

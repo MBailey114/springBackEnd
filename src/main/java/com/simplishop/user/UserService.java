@@ -1,5 +1,6 @@
 package com.simplishop.user;
 
+import com.simplishop.item.Item;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,20 +20,34 @@ public class UserService {
 //    **IN PROGRESS**
     public static void updateUser(Long id, Optional<String> firstName, Optional<String> lastName, Optional<String> password, Optional<String> emailAddress) {
         Optional<User> optionalUser = userRepo.findById(id);
-
        if(optionalUser.isEmpty()) {
            return;
        }
-
        User user = optionalUser.get();
-
        user.setFirstName(firstName.isPresent() ? firstName.get() : user.getFirstName());
         user.setLastName(lastName.isPresent() ? lastName.get() : user.getLastName());
         user.setPassword(password.isPresent() ? password.get() : user.getPassword());
         user.setEmailAddress(emailAddress.isPresent() ? emailAddress.get() : user.getEmailAddress());
-
         userRepo.save(user);
-
+    }
+    public static void addToUserArray(Long id, Integer wishlist) {
+        Optional<User> optionalUser = userRepo.findById(id);
+        if(optionalUser.isEmpty()) {
+            return;
+        }
+        User user = optionalUser.get();
+        List<Integer> wishlistarray = user.getWishlist();
+        for(int i = 0; i < wishlistarray.toArray().length; i++)
+        {
+            if(wishlistarray.toArray()[i] == wishlist)
+            {
+                user.removeFromWishlist(wishlist);
+                userRepo.save(user);
+                return;
+            }
+        }
+        user.addToWishlist(wishlist);
+        userRepo.save(user);
     }
 
     public static void deleteUser(Long id) {
@@ -48,6 +63,16 @@ public class UserService {
 
     public List<User> getUsers() {
         return userRepo.findAll();
+    }
+
+    public List<Integer> getUsersWishlist(Long id)
+    {
+        Optional<User> optionalUser = userRepo.findById(id);
+        if(optionalUser.isEmpty()) {
+            throw new IllegalStateException("user with id " + id + " does not exist");
+        }
+        User user = optionalUser.get();
+        return user.getWishlist();
     }
 
 //    SAVING A USER
