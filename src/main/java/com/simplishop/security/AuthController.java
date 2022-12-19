@@ -30,7 +30,6 @@ public class AuthController {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
-
     private JWTGenerator jwtGenerator;
 
 //    CONSTRUCTOR
@@ -60,15 +59,13 @@ public class AuthController {
          String token = jwtGenerator.generateToken(authentication);
         System.out.println("TOken");
         System.out.println(token);
-        return new ResponseEntity<AuthResponseDTO>(new AuthResponseDTO(token), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
     }
 
 
 //    SETTING UP JSON SO WE DON'T PASS ANY PASSWORDS IN URL STRING
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO){
-        System.out.println("DTO data: ");
-        System.out.println(registerDTO);
         if(userRepository.existsByEmailAddress(registerDTO.getEmailAddress())){
             return new ResponseEntity<>("Email is already in use", HttpStatus.BAD_REQUEST);
         }
