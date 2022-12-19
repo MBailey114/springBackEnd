@@ -47,12 +47,12 @@ public class AuthController {
     @PostMapping("login")
     public ResponseEntity<AuthResponseDTO> login (@RequestBody LoginDTO loginDTO){
         System.out.println(0);
-        System.out.println(loginDTO.getEmail());
+        System.out.println(loginDTO.getEmailAddress());
         System.out.println(loginDTO.getPassword());
 
         Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            loginDTO.getEmail(),
+                            loginDTO.getEmailAddress(),
                         loginDTO.getPassword()));
         System.out.println(1);
         SecurityContextHolder.getContext().setAuthentication(authentication);
