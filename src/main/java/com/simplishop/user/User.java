@@ -1,7 +1,6 @@
 package com.simplishop.user;
 
-
-
+import com.simplishop.item.Item;
 import jakarta.persistence.*;
 
 import java.lang.reflect.Array;
@@ -34,35 +33,36 @@ public class User {
 
     // Add many-to-many relationship with Items
 
-    // private List<Item> wishlist;
+     private List<String> wishlist;
     // private List<Item> basket;
 
 
 //    NO ID CONSTRUCTOR
-    public User(String firstName, String lastName, String password, String emailAddress) {
+    public User(String firstName, String lastName, String password, String emailAddress, List<String> wishlist) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.emailAddress = emailAddress;
+        this.wishlist = wishlist;
     }
 
-//    NOTHING CONSTRUCTOR
+
+
+    //    NOTHING CONSTRUCTOR
     public User() {
 
     }
 
-//    ID CONSTRUCTOR
-public User( Long id, String firstName, String lastName, String password, String emailAddress) {
-    this.id = id;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.password = password;
-    this.emailAddress = emailAddress;
-}
 
-
-
-
+    //    ID CONSTRUCTOR
+    public User(Long id, String firstName, String lastName, String password, String emailAddress, List<String> wishlist) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.emailAddress = emailAddress;
+        this.wishlist = wishlist;
+    }
 
     public Long getId() {
         return id;
@@ -102,5 +102,13 @@ public User( Long id, String firstName, String lastName, String password, String
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public List<String> getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(List<String> wishlist) {
+        this.wishlist = wishlist;
     }
 }

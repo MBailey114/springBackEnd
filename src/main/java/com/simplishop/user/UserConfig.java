@@ -17,12 +17,14 @@ public class UserConfig {
                     "Bloggs",
                     "abc123",
                     "joebloggs@email.com"
+
             );
             User user2 = new User(
                     "John",
                     "Doe",
                     "abc123",
                     "johndoe@email.com"
+
             );
             userRepository.saveAll(
                     List.of(user1, user2));
