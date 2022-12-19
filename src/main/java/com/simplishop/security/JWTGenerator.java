@@ -3,6 +3,7 @@ package com.simplishop.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -26,6 +27,7 @@ public class JWTGenerator {
                 .compact();
         return token;
     }
+
     public String getUsernameFromJWT(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(SecurityConstants.JWT_SECRET)

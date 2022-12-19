@@ -5,6 +5,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.simplishop.security.AuthResponseDTO;
 import com.simplishop.user.UserEntity;
 import com.simplishop.user.UserRepository;
 import org.springframework.http.HttpStatus;
