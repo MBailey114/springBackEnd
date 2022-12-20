@@ -19,9 +19,9 @@ public class ItemRepositoryTests {
     @Autowired
     private ItemRepository itemRepository;
 
-    public ItemRepositoryTests(ItemRepository itemRepository) {
-        this.itemRepository = itemRepository;
-    }
+//    public ItemRepositoryTests(ItemRepository itemRepository) {
+//        this.itemRepository = itemRepository;
+//    }
 
     @Test
     public void ItemRepository_SaveAll_ReturnSavedItem() {

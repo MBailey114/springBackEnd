@@ -73,7 +73,7 @@ public class UserService {
         UserEntity user = optionalUser.get();
         Item item = optionalItem.get();
         user.getItems().add(item);
-        item.getUsers().add(user);
+//        item.getUsers().add(user);
     }
 
 

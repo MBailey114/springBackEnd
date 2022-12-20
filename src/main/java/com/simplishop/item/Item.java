@@ -33,17 +33,17 @@ public class Item {
     private Integer quantity;
     private Double price;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<UserEntity> users = new ArrayList<>();
-
-
-    public List<UserEntity> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<UserEntity> users) {
-        this.users = users;
-    }
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    private List<UserEntity> users = new ArrayList<>();
+//
+//
+//    public List<UserEntity> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(List<UserEntity> users) {
+//        this.users = users;
+//    }
 
     public Item(Long id, String name, String image, String description, String category, Integer quantity, Double price) {
         Id = id;
