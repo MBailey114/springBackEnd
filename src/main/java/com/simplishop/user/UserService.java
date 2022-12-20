@@ -72,7 +72,7 @@ public class UserService {
         Optional<Item> optionalItem = itemRepo.findItemById(itemId);
         UserEntity user = optionalUser.get();
         Item item = optionalItem.get();
-        user.getItems().add(item);
+//        user.getItems().add(item);
 //        item.getUsers().add(user);
     }
 

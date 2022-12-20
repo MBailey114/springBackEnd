@@ -45,10 +45,10 @@ public class UserEntity {
                inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_item", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"))
-    private List<Item> items = new ArrayList<>();
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinTable(name = "user_item", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"))
+//    private List<Item> items = new ArrayList<>();
 
     // Add many-to-many relationship with Items
 
@@ -135,10 +135,10 @@ public UserEntity(Long id, String firstName, String lastName, String password, S
         this.wishlist.remove(itemId);
     }
 
-    public List<Item> getItems() {
-        return items;
-    }
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
+//    public List<Item> getItems() {
+//        return items;
+//    }
+//    public void setItems(List<Item> items) {
+//        this.items = items;
+//    }
 }

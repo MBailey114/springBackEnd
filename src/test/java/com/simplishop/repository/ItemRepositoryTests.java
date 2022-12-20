@@ -51,8 +51,7 @@ public class ItemRepositoryTests {
         Item item = Item.builder()
                 .name("Deluxe Garden Hose")
                 .image("https://www.wheeliebinstoragedirect.co.uk/wp-content/uploads/2018/05/best-garden-hoses.jpg")
-                .description("This high-quality garden hose is made from durable, weather-resistant materials and features a sturdy brass fittings. The flexible design allows for easy maneuvering and storage, and the 50-foot length is perfect for reaching all areas of your garden. Whether you're watering plants, washing your car, or cleaning your deck, this hose is sure to be a reliable and efficient tool.")
-                .category("Garden")
+                .description("This high-quality garden hose is made from durable")
                 .quantity(10)
                 .price(29.99)
                 .build();
@@ -61,7 +60,7 @@ public class ItemRepositoryTests {
         Item item2 = Item.builder()
                 .name("Deluxe Garden Hose")
                 .image("https://www.wheeliebinstoragedirect.co.uk/wp-content/uploads/2018/05/best-garden-hoses.jpg")
-                .description("This high-quality garden hose is made from durable, weather-resistant materials and features a sturdy brass fittings. The flexible design allows for easy maneuvering and storage, and the 50-foot length is perfect for reaching all areas of your garden. Whether you're watering plants, washing your car, or cleaning your deck, this hose is sure to be a reliable and efficient tool.")
+                .description("This high-quality garden hose is made from durable")
                 .category("Garden")
                 .quantity(10)
                 .price(29.99)
@@ -100,4 +99,28 @@ public class ItemRepositoryTests {
         Assertions.assertThat(itemList).isNotNull();
 
     }
+
+    @Test
+    public void ItemRepository_FindByCategory_ReturnsItemNotNull(){
+        //Arrange
+        Item item = Item.builder()
+                .name("Deluxe Garden Hose")
+                .image("https://www.wheeliebinstoragedirect.co.uk/wp-content/uploads/2018/05/best-garden-hoses.jpg")
+                .description("This high-quality garden hose is made from durable.")
+                .category("Garden")
+                .quantity(10)
+                .price(29.99)
+                .build();
+
+        //Act
+        itemRepository.save(item);
+
+        Item itemList = itemRepository.findByCategory(item.getCategory()).get();
+
+        //Assertions
+        Assertions.assertThat(itemList).isNotNull();
+
+    }
+
+
 }
