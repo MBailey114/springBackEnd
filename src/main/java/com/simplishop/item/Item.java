@@ -1,12 +1,19 @@
 package com.simplishop.item;
 import com.simplishop.user.UserEntity;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+
 @Table
+//@Data
+@Builder
+@Entity
 public class Item {
     @Id
     @SequenceGenerator(
