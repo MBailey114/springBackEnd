@@ -1,7 +1,11 @@
 package com.simplishop.item;
 
+import com.simplishop.item.exception.UserNotFoundException;
+import com.simplishop.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +17,9 @@ import java.util.Optional;
 @RequestMapping(path = "shop/item")
 public class ItemController {
     private final ItemService itemService;
+
+    private UserRepository userRepo;
+    private ItemRepository itemRepo;
 
     @Autowired
     public ItemController(ItemService itemService){
@@ -32,10 +39,21 @@ public class ItemController {
     public List<Item> getItemByCategory(@PathVariable("category") String category){
         return itemService.getItemByCategory(category);
     }
-    @PostMapping
-    public void addItem(@RequestBody Item item)
+
+    @GetMapping(path = "Author/{userId}")
+    public List<Item> getItemsByUser(@PathVariable("userId") long userId){
+        if(!userRepo.existsById(userId)){
+            throw new UserNotFoundException("Not found User with id = " + userId);
+        }
+
+        List<Item> items = itemRepo.findByUserId(userId);
+        return items;
+    }
+    @PostMapping(path = "{userId}")
+    public ResponseEntity<Item> addItem(@RequestBody Item item, @PathVariable(value = "userId") long id)
     {
-        itemService.addNewItem(item);
+        itemService.addNewItem(item,id);
+        return new ResponseEntity<>(item, HttpStatus.CREATED);
     }
     @DeleteMapping(path = "{itemId}")
     public void deleteItem(@PathVariable("itemId") Long itemId)

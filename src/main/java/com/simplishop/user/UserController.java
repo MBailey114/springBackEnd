@@ -69,9 +69,9 @@ public class UserController {
         UserService.deleteUser(id);
     }
 
-    @PutMapping(path = "addItem/{itemId}/{userId}")
-    public void addItemToUser(@PathVariable("itemId") long itemId, @PathVariable("userId") long userId){
-        addItemToUser(userId,itemId);
-    }
+//    @PutMapping(path = "addItem/{itemId}/{userId}")
+//    public void addItemToUser(@PathVariable("itemId") long itemId, @PathVariable("userId") long userId){
+//        addItemToUser(userId,itemId);
+//    }
 
 }
