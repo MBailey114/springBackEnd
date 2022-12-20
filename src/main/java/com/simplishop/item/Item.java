@@ -1,10 +1,13 @@
 package com.simplishop.item;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.simplishop.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,17 +36,33 @@ public class Item {
     private Integer quantity;
     private Double price;
 
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    private List<UserEntity> users = new ArrayList<>();
-//
-//
-//    public List<UserEntity> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(List<UserEntity> users) {
-//        this.users = users;
-//    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", nullable = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private UserEntity user;
+
+    public Item(Long id, String name, String image, String description, String category, Integer quantity, Double price, UserEntity user) {
+        this.name = name;
+        this.image = image;
+        this.description = description;
+        this.category = category;
+        this.quantity = quantity;
+        this.price = price;
+        this.user = user;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
 
     public Item(Long id, String name, String image, String description, String category, Integer quantity, Double price) {
         Id = id;
