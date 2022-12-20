@@ -1,5 +1,9 @@
 package com.simplishop.item;
+import com.simplishop.user.UserEntity;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -21,6 +25,18 @@ public class Item {
     private String category;
     private Integer quantity;
     private Double price;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<UserEntity> users = new ArrayList<>();
+
+
+    public List<UserEntity> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserEntity> users) {
+        this.users = users;
+    }
 
     public Item(Long id, String name, String image, String description, String category, Integer quantity, Double price) {
         Id = id;

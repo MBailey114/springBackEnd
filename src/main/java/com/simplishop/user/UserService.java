@@ -1,5 +1,7 @@
 package com.simplishop.user;
 
+import com.simplishop.item.Item;
+import com.simplishop.item.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -10,6 +12,8 @@ import java.util.Optional;
 @Component
 public class UserService {
     private static UserRepository userRepo;
+
+    private static ItemRepository itemRepo;
 
     @Autowired
     public UserService(UserRepository userRepo) {
@@ -61,6 +65,15 @@ public class UserService {
             throw new IllegalStateException("user with id " + id + " does not exist");
         }
         userRepo.deleteById(id);
+    }
+
+    public static void addItemToUser(long userId, long itemId ){
+        Optional<UserEntity> optionalUser = userRepo.findById(userId);
+        Optional<Item> optionalItem = itemRepo.findItemById(itemId);
+        UserEntity user = optionalUser.get();
+        Item item = optionalItem.get();
+        user.getItems().add(item);
+        item.getUsers().add(user);
     }
 
 
