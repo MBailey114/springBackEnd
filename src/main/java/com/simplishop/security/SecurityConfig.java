@@ -60,7 +60,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/auth/**", "/shop/item/**", "/shop/user/wishlist/**", "/shop/user/**").permitAll()
+                .requestMatchers("/api/auth/**", "/shop/item/**", "/shop/user/wishlist/**", "/**", "/shop/user/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
