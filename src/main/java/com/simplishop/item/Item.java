@@ -1,4 +1,5 @@
 package com.simplishop.item;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.simplishop.user.UserEntity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
@@ -31,8 +32,9 @@ public class Item {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private UserEntity user;
 
 

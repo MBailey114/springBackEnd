@@ -11,11 +11,12 @@ import com.simplishop.item.exception.NoItemFoundException;
 public class ItemService {
 
     private final ItemRepository itemRepository;
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public ItemService(ItemRepository itemRepository){
+    public ItemService(ItemRepository itemRepository, UserRepository userRepository){
         this.itemRepository = itemRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Item> getItems()
@@ -34,6 +35,7 @@ public class ItemService {
 
         Item item = userRepository.findById(userId).map(user -> {
             itemRequest.setUser(user);
+            System.out.println(userId);
             return itemRepository.save(itemRequest);
         }).orElseThrow(() -> new UserNotFoundException("Not found User with id = " + userId));
 

@@ -4,6 +4,8 @@ import com.simplishop.item.exception.UserNotFoundException;
 import com.simplishop.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,9 +50,10 @@ public class ItemController {
         return items;
     }
     @PostMapping(path = "{userId}")
-    public void addItem(@RequestBody Item item, @PathVariable(value = "userId") long id)
+    public ResponseEntity<Item> addItem(@RequestBody Item item, @PathVariable(value = "userId") long id)
     {
         itemService.addNewItem(item,id);
+        return new ResponseEntity<>(item, HttpStatus.CREATED);
     }
     @DeleteMapping(path = "{itemId}")
     public void deleteItem(@PathVariable("itemId") Long itemId)
