@@ -7,18 +7,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+
 @CrossOrigin
 @SpringBootApplication
 @RestController
 @RequestMapping(path = "shop/user")
 public class UserController {
 
+
     private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
 
     @GetMapping
     public List<UserEntity> getUser(){
