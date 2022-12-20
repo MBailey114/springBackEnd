@@ -1,5 +1,7 @@
 package com.simplishop.item;
 
+import com.simplishop.item.exception.UserNotFoundException;
+import com.simplishop.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -9,6 +11,7 @@ import com.simplishop.item.exception.NoItemFoundException;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public ItemService(ItemRepository itemRepository){
@@ -27,8 +30,13 @@ public class ItemService {
         List<Item> itemOptional = itemRepository.findAllByCategory(category);
         return itemOptional;
     }
-    public void addNewItem(Item item){
-        itemRepository.save(item);
+    public void addNewItem(Item itemRequest,long userId){
+
+        Item item = userRepository.findById(userId).map(user -> {
+            itemRequest.setUser(user);
+            return itemRepository.save(itemRequest);
+        }).orElseThrow(() -> new UserNotFoundException("Not found User with id = " + userId));
+
     }
 
     public void deleteItem(Long itemId){
