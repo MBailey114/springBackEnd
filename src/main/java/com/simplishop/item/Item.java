@@ -32,7 +32,7 @@ public class Item {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = true)
+    @JoinColumn(name = "userId", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private UserEntity user;

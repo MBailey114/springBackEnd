@@ -31,11 +31,10 @@ public class ItemService {
         List<Item> itemOptional = itemRepository.findAllByCategory(category);
         return itemOptional;
     }
-    public void addNewItem(Item itemRequest,long userId){
+    public void addNewItem(Item itemRequest,Long userId){
 
         Item item = userRepository.findById(userId).map(user -> {
             itemRequest.setUser(user);
-            System.out.println(userId);
             return itemRepository.save(itemRequest);
         }).orElseThrow(() -> new UserNotFoundException("Not found User with id = " + userId));
 

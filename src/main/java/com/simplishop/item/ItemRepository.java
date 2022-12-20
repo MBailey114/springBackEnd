@@ -15,5 +15,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query("SELECT s FROM Item s WHERE s.id = ?1")
     Optional<Item> findItemById(Long id);
 
-    List<Item> findByUserId(long userId);
+    List<Item> findByUserId(Long userId);
 }

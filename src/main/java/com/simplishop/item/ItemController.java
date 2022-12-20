@@ -16,15 +16,19 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "shop/item")
 public class ItemController {
+
     private final ItemService itemService;
 
     private UserRepository userRepo;
     private ItemRepository itemRepo;
 
     @Autowired
-    public ItemController(ItemService itemService){
+    public ItemController(ItemService itemService, ItemRepository itemRepository, UserRepository userRepository){
         this.itemService = itemService;
+        this.itemRepo = itemRepository;
+        this.userRepo = userRepository;
     }
+
     @GetMapping
     public List<Item> getItems(){
         return itemService.getItems();
@@ -41,7 +45,7 @@ public class ItemController {
     }
 
     @GetMapping(path = "Author/{userId}")
-    public List<Item> getItemsByUser(@PathVariable("userId") long userId){
+    public List<Item> getItemsByUser(@PathVariable("userId") Long userId){
         if(!userRepo.existsById(userId)){
             throw new UserNotFoundException("Not found User with id = " + userId);
         }
@@ -50,7 +54,7 @@ public class ItemController {
         return items;
     }
     @PostMapping(path = "{userId}")
-    public ResponseEntity<Item> addItem(@RequestBody Item item, @PathVariable(value = "userId") long id)
+    public ResponseEntity<Item> addItem(@RequestBody Item item, @PathVariable(value = "userId") Long id)
     {
         itemService.addNewItem(item,id);
         return new ResponseEntity<>(item, HttpStatus.CREATED);
