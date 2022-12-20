@@ -51,7 +51,8 @@ public class ItemRepositoryTests {
         Item item = Item.builder()
                 .name("Deluxe Garden Hose")
                 .image("https://www.wheeliebinstoragedirect.co.uk/wp-content/uploads/2018/05/best-garden-hoses.jpg")
-                .description("This high-quality garden hose is made from durable")
+                .description("This high-quality garden hose.")
+                .category("Garden")
                 .quantity(10)
                 .price(29.99)
                 .build();
@@ -60,7 +61,7 @@ public class ItemRepositoryTests {
         Item item2 = Item.builder()
                 .name("Deluxe Garden Hose")
                 .image("https://www.wheeliebinstoragedirect.co.uk/wp-content/uploads/2018/05/best-garden-hoses.jpg")
-                .description("This high-quality garden hose is made from durable")
+                .description("This high-quality garden hose.")
                 .category("Garden")
                 .quantity(10)
                 .price(29.99)
@@ -121,6 +122,5 @@ public class ItemRepositoryTests {
         Assertions.assertThat(itemList).isNotNull();
 
     }
-
 
 }
