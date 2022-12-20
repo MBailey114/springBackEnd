@@ -6,6 +6,7 @@ import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.simplishop.security.AuthResponseDTO;
+import com.simplishop.security.RegisterResponseDTO;
 import com.simplishop.user.UserEntity;
 import com.simplishop.user.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -64,9 +65,9 @@ public class AuthController {
 
 //    SETTING UP JSON SO WE DON'T PASS ANY PASSWORDS IN URL STRING
     @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO){
+    public ResponseEntity<RegisterResponseDTO> register(@RequestBody RegisterDTO registerDTO){
         if(userRepository.existsByEmailAddress(registerDTO.getEmailAddress())){
-            return new ResponseEntity<>("Email is already in use", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>( new RegisterResponseDTO("Email address already found"), HttpStatus.BAD_REQUEST);
         }
 
         UserEntity user = new UserEntity();
@@ -81,7 +82,7 @@ public class AuthController {
 
         userRepository.save(user);
 
-        return new ResponseEntity<>("User Registered Successfully", HttpStatus.OK);
+        return new ResponseEntity<>(new RegisterResponseDTO("User registered successfully"), HttpStatus.OK);
 
     }
 
