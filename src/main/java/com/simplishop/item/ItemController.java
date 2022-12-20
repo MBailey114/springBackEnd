@@ -44,13 +44,23 @@ public class ItemController {
         return itemService.getItemByCategory(category);
     }
 
-    @GetMapping(path = "Author/{userId}")
+    @GetMapping(path = "user/{userId}")
     public List<Item> getItemsByUser(@PathVariable("userId") Long userId){
         if(!userRepo.existsById(userId)){
             throw new UserNotFoundException("Not found User with id = " + userId);
         }
 
         List<Item> items = itemRepo.findByUserId(userId);
+        return items;
+    }
+
+    @GetMapping(path = "search")
+    public List<Item> searchItems(@RequestParam("q") String query) {
+        List<Item> items = itemRepo.findByNameContainingIgnoreCase(query);
+        if (items.isEmpty()) {
+            items = itemRepo.findByDescriptionContainingIgnoreCase(query);
+        }
+
         return items;
     }
     @PostMapping(path = "{userId}")
@@ -70,5 +80,19 @@ public class ItemController {
     @PutMapping(path = "{itemId}")
     public void updateItem(@RequestBody UpdateItem request, @PathVariable("itemId") Long itemId){
         itemService.editItem(itemId, request.name, request.image, request.description, request.category, request.quantity, request.price);
+    }
+
+    @DeleteMapping(path = "user/{userId}")
+    public void deleteAllItemsByUser(@PathVariable("userId") Long userId) {
+        // First, check if the user exists
+        if (!userRepo.existsById(userId)) {
+            throw new UserNotFoundException("Not found User with id = " + userId);
+        }
+
+        // Then, get all the items for the user
+        List<Item> items = itemRepo.findByUserId(userId);
+
+        // Finally, delete all the items
+        itemRepo.deleteAll(items);
     }
 }
