@@ -5,6 +5,7 @@ package com.simplishop.user;
 import com.simplishop.item.Item;
 import com.simplishop.security.Role;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,9 +15,10 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Builder
 @Table(name = "users")
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 public class UserEntity {
 
     // Create an id in ascending order
@@ -56,7 +58,16 @@ public class UserEntity {
     // private List<Item> basket;
 
 
-//    NO ID CONSTRUCTOR
+    public UserEntity(String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist, List<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.emailAddress = emailAddress;
+        this.wishlist = wishlist;
+        this.roles = roles;
+    }
+
+    //    NO ID CONSTRUCTOR
     public UserEntity(String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -67,18 +78,18 @@ public class UserEntity {
 
 
 //    ID CONSTRUCTOR
-public UserEntity(Long id, String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist) {
+public UserEntity(Long id, String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist, List<Role> roles) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.password = password;
     this.emailAddress = emailAddress;
     this.wishlist = wishlist;
+    this.roles = roles;
 }
 
-
-
-
+    public UserEntity() {
+    }
 
     public Long getId() {
         return id;
