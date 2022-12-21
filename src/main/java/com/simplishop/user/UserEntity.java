@@ -2,17 +2,12 @@ package com.simplishop.user;
 
 
 
-import com.simplishop.item.Item;
 import com.simplishop.security.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -125,6 +120,11 @@ public UserEntity(Long id, String firstName, String lastName, String password, S
     public List<Integer> getWishlist() {
         return wishlist;
     }
+
+    public void setWishlist() {
+        this.wishlist = wishlist;
+    }
+
     public void addToWishlist(Integer itemId) {
         this.wishlist.add(itemId);
     }

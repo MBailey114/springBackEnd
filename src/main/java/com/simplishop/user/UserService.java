@@ -67,13 +67,6 @@ public class UserService {
         userRepo.deleteById(id);
     }
 
-//    public static void addItemToUser(long userId, long itemId ){
-//        Optional<UserEntity> optionalUser = userRepo.findById(userId);
-//        Optional<Item> optionalItem = itemRepo.findItemById(itemId);
-//        UserEntity user = optionalUser.get();
-//        Item item = optionalItem.get();
-//        user.add
-//    }
 
 
     public List<UserEntity> getUsers() {

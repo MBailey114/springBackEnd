@@ -1,12 +1,6 @@
 package com.simplishop.security;
 
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTCreator;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
-import com.simplishop.security.AuthResponseDTO;
-import com.simplishop.security.RegisterResponseDTO;
 import com.simplishop.user.UserEntity;
 import com.simplishop.user.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -19,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
 
 @CrossOrigin
@@ -75,6 +69,7 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode((registerDTO.getPassword())));
         user.setFirstName(registerDTO.getFirstName());
         user.setLastName(registerDTO.getLastName());
+        user.setWishlist(new ArrayList<>());
 
 //        DEFAULT ROLE = USER
          Role roles = roleRepository.findByName("USER").get();
