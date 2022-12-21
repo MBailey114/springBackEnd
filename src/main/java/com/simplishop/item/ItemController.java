@@ -59,16 +59,18 @@ public class ItemController {
     @GetMapping(path = "userItems/{itemId}")
     public Long getUserIdByItem(@PathVariable("itemId") Long itemId) {
         Optional<Item> item = itemService.getItemById(itemId);
-        if (item.isPresent()) {
-            UserEntity user = item.get().getUser();
-            if (user != null) {
-                return user.getId();
-            } else {
-                throw new UserNotFoundException("Not found User for Item with id = " + itemId);
-            }
-        } else {
-            throw new NoItemFoundException("Not found Item with id = " + itemId);
-        }
+        UserEntity user = item.get().getUser();
+        return user == null ? null : user.getId();
+//        if (item.isPresent()) {
+//            UserEntity user = item.get().getUser();
+//            if (user != null) {
+//                return user.getId();
+//            } else {
+//                throw new UserNotFoundException("Not found User for Item with id = " + itemId);
+//            }
+//        } else {
+//            throw new NoItemFoundException("Not found Item with id = " + itemId);
+//        }
     }
 
     @GetMapping(path = "search")
