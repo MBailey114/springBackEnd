@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -75,6 +76,7 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode((registerDTO.getPassword())));
         user.setFirstName(registerDTO.getFirstName());
         user.setLastName(registerDTO.getLastName());
+        user.setWishlist(new ArrayList<Integer>());
 
 //        DEFAULT ROLE = USER
          Role roles = roleRepository.findByName("USER").get();
