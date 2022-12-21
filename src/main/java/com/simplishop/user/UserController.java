@@ -4,6 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +46,7 @@ public class UserController {
 
     @PostMapping
     public void addUser(@RequestBody NewUser request){
-        UserEntity user = new UserEntity();
+        UserEntity user = new UserEntity(request.firstName(), request.lastName(), request.password(), request.email(), new ArrayList<Integer>());
         user.setFirstName(request.firstName());
         user.setLastName(request.lastName());
         user.setPassword(request.password());

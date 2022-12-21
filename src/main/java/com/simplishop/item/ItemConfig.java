@@ -23,7 +23,7 @@ public class ItemConfig {
             Item item2 = new Item(
                     "Phone",
                     "https://www.three.co.uk/cs/Satellite?blobkey=id&blobwhere=1401331509853&blobcol=urldata&blobtable=MungoBlobs",
-                    "A phone is a device used for communication and messaging.",
+                    " The new high quality iPhone 13 with the latest Apple technology.",
                     "Technology",
                     1,
                     199.99
@@ -32,7 +32,7 @@ public class ItemConfig {
             Item item3 = new Item(
                     "Camera",
                     "https://media.currys.biz/i/currysprod/M10205274_white?$l-large$&fmt=auto",
-                    "A high-quality DSLR camera with interchangeable lenses",
+                    "A vintage polaroid camera that can prints out photos instantly.",
                     "Technology",
                     5,
                     800.00

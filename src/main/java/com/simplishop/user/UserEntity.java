@@ -56,6 +56,8 @@ public class UserEntity {
         this.password = password;
         this.emailAddress = emailAddress;
         this.wishlist = wishlist;
+
+        this.wishlist.add(0);
     }
 
 
@@ -67,6 +69,8 @@ public UserEntity(Long id, String firstName, String lastName, String password, S
     this.password = password;
     this.emailAddress = emailAddress;
     this.wishlist = wishlist;
+
+    this.wishlist.add(0);
 }
 
 
