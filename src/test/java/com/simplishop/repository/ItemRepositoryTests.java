@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 //USING A H2 DATABASE TO SIMULATE A REAL DATABASE
@@ -122,5 +123,62 @@ public class ItemRepositoryTests {
         Assertions.assertThat(itemList).isNotNull();
 
     }
+
+//    THIS UPDATE IS FOR UPDATING ANY ATTRIBUTE FOR ITEM
+//    ATTRIBUTES: name, image, description, category, quantity and price
+    @Test
+    public void ItemRepository_UpdateItem_ReturnsItemNotNull(){
+        //Arrange
+        Item item = Item.builder()
+                .name("Deluxe Garden Hose")
+                .image("https://www.wheeliebinstoragedirect.co.uk/wp-content/uploads/2018/05/best-garden-hoses.jpg")
+                .description("This high-quality garden hose is made from durable.")
+                .category("Garden")
+                .quantity(10)
+                .price(29.99)
+                .build();
+
+        itemRepository.save(item);
+
+        Item itemSave = itemRepository.findById(item.getId()).get();
+        itemSave.setCategory("Home");
+        itemSave.setName("Regular Garden Hose");
+
+
+        //Act
+        Item updatedItem = itemRepository.save(itemSave);
+
+
+        //Assertions
+        Assertions.assertThat(updatedItem.getName()).isNotNull();
+        Assertions.assertThat(updatedItem.getCategory()).isNotNull();
+
+    }
+
+//   TESTING THAT WE CAN DELETE AN ITEM
+    @Test
+    public void ItemRepository_Delete_ReturnsItemIsEmpty(){
+        //Arrange
+        Item item = Item.builder()
+                .name("Deluxe Garden Hose")
+                .image("https://www.wheeliebinstoragedirect.co.uk/wp-content/uploads/2018/05/best-garden-hoses.jpg")
+                .description("This high-quality garden hose is made from durable.")
+                .category("Garden")
+                .quantity(10)
+                .price(29.99)
+                .build();
+
+        //Act
+        itemRepository.save(item);
+
+        itemRepository.deleteById(item.getId());
+        Optional<Item> itemReturn = itemRepository.findById(item.getId());
+
+        //Assertions
+        Assertions.assertThat(itemReturn).isEmpty();
+
+    }
+
+
 
 }
