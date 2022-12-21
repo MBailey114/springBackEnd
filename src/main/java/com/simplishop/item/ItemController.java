@@ -56,7 +56,7 @@ public class ItemController {
         return items;
     }
 
-    @GetMapping(path = "user/{itemId}")
+    @GetMapping(path = "userItems/{itemId}")
     public Long getUserIdByItem(@PathVariable("itemId") Long itemId) {
         Optional<Item> item = itemService.getItemById(itemId);
         if (item.isPresent()) {
