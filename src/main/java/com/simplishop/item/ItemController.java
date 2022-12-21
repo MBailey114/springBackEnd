@@ -1,6 +1,8 @@
 package com.simplishop.item;
 
+import com.simplishop.item.exception.NoItemFoundException;
 import com.simplishop.item.exception.UserNotFoundException;
+import com.simplishop.user.UserEntity;
 import com.simplishop.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -52,6 +54,21 @@ public class ItemController {
 
         List<Item> items = itemRepo.findByUserId(userId);
         return items;
+    }
+
+    @GetMapping(path = "user/{itemId}")
+    public Long getUserIdByItem(@PathVariable("itemId") Long itemId) {
+        Optional<Item> item = itemService.getItemById(itemId);
+        if (item.isPresent()) {
+            UserEntity user = item.get().getUser();
+            if (user != null) {
+                return user.getId();
+            } else {
+                throw new UserNotFoundException("Not found User for Item with id = " + itemId);
+            }
+        } else {
+            throw new NoItemFoundException("Not found Item with id = " + itemId);
+        }
     }
 
     @GetMapping(path = "search")
