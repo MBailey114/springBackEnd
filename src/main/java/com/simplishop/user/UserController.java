@@ -34,6 +34,12 @@ public class UserController {
         return userService.getCurrentUser(authentication);
     }
 
+    @GetMapping("{id}")
+    public UserEntity getUserById(@PathVariable("id") Long id) {
+        return userService.getUserById(id);
+    }
+
+
     @GetMapping(path = "wishlist/{id}")
     public List<Integer> getUserWishlist(@PathVariable("id") Long id){
         return userService.getUsersWishlist(id);

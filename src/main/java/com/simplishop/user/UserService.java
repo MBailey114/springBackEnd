@@ -90,6 +90,10 @@ public class UserService {
         return user.getWishlist();
     }
 
+    public UserEntity getUserById(Long id) {
+        return userRepo.findById(id).orElse(null);
+    }
+
 
     //    SAVING A USER
     public void addNewUser(UserEntity user) {
