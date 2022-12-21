@@ -9,6 +9,7 @@ import com.simplishop.security.AuthResponseDTO;
 import com.simplishop.security.RegisterResponseDTO;
 import com.simplishop.user.UserEntity;
 import com.simplishop.user.UserRepository;
+import com.simplishop.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +34,17 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
     private JWTGenerator jwtGenerator;
 
+    private final UserService userService;
+
 //    CONSTRUCTOR
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator) {
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtGenerator = jwtGenerator;
+        this.userService = userService;
     }
 
 //    LOGIN ENDPOINT THAT WILL ALLOW A USER TO LOG IN AND STORE THEIR DETAILS
@@ -86,6 +90,28 @@ public class AuthController {
 
         return new ResponseEntity<>(new RegisterResponseDTO("User registered successfully"), HttpStatus.OK);
 
+    }
+
+    @PostMapping("password")
+    public ResponseEntity<EditPasswordResponseDTO> password(Authentication authentication, @RequestBody EditPasswordDTO editPasswordDTO) {
+        System.out.println(editPasswordDTO);
+        if(!authentication.isAuthenticated()){
+            return new ResponseEntity<EditPasswordResponseDTO>(new EditPasswordResponseDTO("Bad token"), HttpStatus.UNAUTHORIZED);
+        }
+        // User is authenticated
+        // Get current user
+        UserEntity userEntity = userService.getCurrentUser(authentication);
+
+        // Check password
+        Boolean passwordMatch = passwordEncoder.matches(editPasswordDTO.getCurrentPassword(), userEntity.getPassword());
+        if(!passwordMatch) {
+            System.out.println("Incorrect password");
+            return new ResponseEntity<EditPasswordResponseDTO>(new EditPasswordResponseDTO("Incorrect Password"), HttpStatus.UNAUTHORIZED);
+        }
+
+        userEntity.setPassword(passwordEncoder.encode(editPasswordDTO.getNewPassword()));
+        userRepository.save(userEntity);
+        return new ResponseEntity<EditPasswordResponseDTO>(new EditPasswordResponseDTO("Password changed"), HttpStatus.OK);
     }
 
 }

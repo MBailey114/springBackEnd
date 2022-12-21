@@ -47,6 +47,7 @@ public class UserController {
 
     record NewUser(String firstName, String lastName, String password, String email){};
     record UpdateUserArray(Integer itemId){};
+    record UpdatePassword(String currentPassword, String newPassword){};
 
     record UpdateUser(Optional<String> firstName, Optional<String> lastName, Optional<String> password, Optional<String> email){};
 
@@ -59,6 +60,24 @@ public class UserController {
         user.setEmailAddress(request.email());
         userService.addNewUser(user);
     }
+
+    // POST /shop/user/:userID/password
+//    @PostMapping (path = "{id}/password")
+//    public void editPassword(Authentication authentication, @RequestBody NewUser request){
+//
+//        // Check that authentication is correct
+//        if(authentication.isAuthenticated()){
+//            System.out.println("Hello");
+//            return;
+//        }else{
+//            // Look for current user in db
+//            userService.getCurrentUser(authentication);
+//
+//
+//        }
+//        user.setPassword(request.password());
+//        userService.addNewUser(user);
+//    }
 
     @PutMapping(path = "{id}")
     public void updateUser(@RequestBody UpdateUser request, @PathVariable("id") Long id) {
