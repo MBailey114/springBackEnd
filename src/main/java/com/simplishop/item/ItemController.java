@@ -2,6 +2,8 @@ package com.simplishop.item;
 
 import com.simplishop.item.exception.NoItemFoundException;
 import com.simplishop.item.exception.UserNotFoundException;
+import com.simplishop.review.Review;
+import com.simplishop.review.ReviewRepository;
 import com.simplishop.user.UserEntity;
 import com.simplishop.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @CrossOrigin
@@ -24,12 +25,15 @@ public class ItemController {
 
     private UserRepository userRepo;
     private ItemRepository itemRepo;
+    private final ReviewRepository reviewRepository;
 
     @Autowired
-    public ItemController(ItemService itemService, ItemRepository itemRepository, UserRepository userRepository){
+    public ItemController(ItemService itemService, ItemRepository itemRepository, UserRepository userRepository,
+                          ReviewRepository reviewRepository){
         this.itemService = itemService;
         this.itemRepo = itemRepository;
         this.userRepo = userRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     @GetMapping
@@ -54,12 +58,7 @@ public class ItemController {
 
     @GetMapping(path = "{itemId}/reviews")
     public List<Review> getReviews(@PathVariable("itemId") Long itemId) {
-        Optional<Item> item = itemService.getItemById(itemId);
-        if (item.isPresent()) {
-            return item.get().getReviews();
-        } else {
-            throw new NoItemFoundException("Not found Item with id = " + itemId);
-        }
+        return itemService.getReviewsForItem(itemId);
     }
 
 
@@ -118,10 +117,10 @@ public class ItemController {
         itemService.editItem(itemId, request.name, request.image, request.description, request.category, request.quantity, request.price);
     }
 
-//    @PutMapping(path = "review/{itemId}")
-//    public void addToReviews(@PathVariable("itemId") Long itemId, @RequestBody Review review) {
-//        itemService.addToReviews(itemId, review);
-//    }
+    @PutMapping(path = "review/{itemId}/{userId}")
+    public void addToReviews(@PathVariable("itemId") Long itemId,@PathVariable("userId") Long userId, @RequestBody Review review) {
+        itemService.addReview(itemId,userId, review);
+    }
 
 
     @DeleteMapping(path = "user/{userId}")
@@ -139,11 +138,3 @@ public class ItemController {
     }
 }
 
-class Review{
-    Integer id;
-    Integer rating;
-
-    public Integer getId() {
-        return id;
-    }
-}

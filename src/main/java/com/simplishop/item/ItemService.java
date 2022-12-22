@@ -1,11 +1,13 @@
 package com.simplishop.item;
 
 import com.simplishop.item.exception.UserNotFoundException;
+import com.simplishop.review.Review;
+import com.simplishop.review.ReviewRepository;
+import com.simplishop.user.UserEntity;
 import com.simplishop.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.List;
 import com.simplishop.item.exception.NoItemFoundException;
@@ -15,10 +17,13 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
 
+    private final ReviewRepository reviewRepository;
+
     @Autowired
-    public ItemService(ItemRepository itemRepository, UserRepository userRepository){
+    public ItemService(ItemRepository itemRepository, UserRepository userRepository, ReviewRepository reviewRepository){
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     public List<Item> getItems()
@@ -42,19 +47,6 @@ public class ItemService {
 
     }
 
-    public void addToReviews(Long itemId, Review review) {
-        Optional<Item> itemOptional = itemRepository.findById(itemId);
-        if (itemOptional.isPresent()) {
-            Item item = itemOptional.get();
-            List<Review> reviews = item.getReviews();
-            Integer userId = review.getId();
-            if (!reviews.stream().anyMatch(r -> r.getId().equals(userId))) {
-                reviews.add(review);
-                item.setReviews(reviews);
-                itemRepository.save(item);
-            }
-        }
-    }
 
     public void deleteItem(Long itemId){
         itemRepository.deleteById(itemId);
@@ -75,5 +67,34 @@ public class ItemService {
         item.setQuantity(quantity.isPresent() ? quantity.get() : item.getQuantity());
         item.setPrice(price.isPresent() ? price.get() : item.getPrice());
         itemRepository.save(item);
+    }
+
+    public void addReview(Long itemId, Long userId, Review review) {
+        // First, retrieve the item and the user making the review
+        Item item = itemRepository.findById(itemId).orElse(null);
+        UserEntity user = userRepository.findById(userId).orElse(null);
+
+        // Check if the user has already made a review for this item
+        if (item != null && user != null) {
+            Review existingReview = reviewRepository.findByItemAndUser(item, user);
+            if (existingReview == null) {
+                // If the user has not made a review for this item, add the review
+                review.setItem(item);
+                review.setUser(user);
+                reviewRepository.save(review);
+            } else {
+                // If the user has already made a review for this item, throw an exception
+                throw new IllegalArgumentException("User has already made a review for this item");
+            }
+        } else {
+            // If the item or user could not be found, throw an exception
+            throw new IllegalArgumentException("Invalid item or user");
+        }
+    }
+
+    public List<Review> getReviewsForItem(Long itemId) {
+        Optional<Item> optionalItem = itemRepository.findItemById(itemId);
+        Item item = optionalItem.get();
+        return reviewRepository.findByItem(item);
     }
 }
