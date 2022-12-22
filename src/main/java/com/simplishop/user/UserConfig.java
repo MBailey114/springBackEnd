@@ -18,6 +18,7 @@ public class UserConfig {
                     "Bloggs",
                     "abc123",
                     "joebloggs@email.com",
+                    new ArrayList<Integer>(),
                     new ArrayList<Integer>()
             );
             UserEntity user2 = new UserEntity(
@@ -25,6 +26,7 @@ public class UserConfig {
                     "Doe",
                     "abc123",
                     "johndoe@email.com",
+                    new ArrayList<Integer>(),
                     new ArrayList<Integer>()
             );
             userRepository.saveAll(
