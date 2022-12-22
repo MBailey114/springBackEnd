@@ -143,6 +143,9 @@ public UserEntity(Long id, String firstName, String lastName, String password, S
 
     public void addToBasket(Integer itemId) {this.basket.add(itemId);}
     public void removeFromBasket(Integer itemId) {this.basket.remove(itemId);}
+    public List<Integer> resetBasket(){ this.basket = new ArrayList<Integer>();
+        return null;
+    }
 
     public List<Integer> getBasket() {
         return basket;
