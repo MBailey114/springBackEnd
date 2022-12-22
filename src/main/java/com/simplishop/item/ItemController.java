@@ -118,8 +118,14 @@ public class ItemController {
     }
 
     @PutMapping(path = "review/{itemId}/{userId}")
-    public void addToReviews(@PathVariable("itemId") Long itemId,@PathVariable("userId") Long userId, @RequestBody Review review) {
-        itemService.addReview(itemId,userId, review);
+    public ResponseEntity<Object> addToReviews(@PathVariable("itemId") Long itemId,@PathVariable("userId") Long userId, @RequestBody Review review) {
+        try {
+            itemService.addReview(itemId, userId, review);
+        } catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(review, HttpStatus.CREATED);
+
     }
 
 
