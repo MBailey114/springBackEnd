@@ -1,4 +1,5 @@
 package com.simplishop.user;
+import com.simplishop.review.Review;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.core.Authentication;
@@ -39,6 +40,10 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @GetMapping(path = "{userId}/reviews")
+    public List<Review> getReviews(@PathVariable("userId") Long userId) {
+        return userService.getReviewsForUser(userId);
+    }
 
     @GetMapping(path = "wishlist/{id}")
     public List<Integer> getUserWishlist(@PathVariable("id") Long id){

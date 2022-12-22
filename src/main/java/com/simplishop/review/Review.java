@@ -28,6 +28,8 @@ public class Review {
 
     private Integer rating;
 
+    private String content;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "itemId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -46,6 +48,14 @@ public class Review {
 
     public void setRating(Integer rating) {
         this.rating = rating;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Item getItem() {
