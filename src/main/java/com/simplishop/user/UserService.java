@@ -101,7 +101,7 @@ public class UserService {
     }
 
 
-    public List<Integer> getUsersBasket(Long id) {
+    public static List<Integer> getUsersBasket(Long id) {
         Optional<UserEntity> optionalUser = userRepo.findById(id);
         if(optionalUser.isEmpty()) {
             throw new IllegalStateException("user with id " + id + " does not exist");
@@ -129,4 +129,15 @@ public class UserService {
         user.addToBasket(basket);
         userRepo.save(user);
     }
+
+    public static void resetBasket(Long id)
+    {
+        Optional<UserEntity> optionalUser = userRepo.findById(id);
+        if(optionalUser.isEmpty()) {
+            return;
+        }
+        UserEntity user = optionalUser.get();
+        List<Integer> basketArray = user.resetBasket();
+    }
+
 }
