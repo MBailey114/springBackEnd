@@ -9,7 +9,7 @@ import java.util.List;
 @Configuration
 public class RoleConfig {
     @Bean
-    CommandLineRunner commandLineRunnerUser(
+    CommandLineRunner commandLineRunnerRole(
             RoleRepository roleRepository) {
         return args -> {
             Role role1 = new Role("ADMIN");
