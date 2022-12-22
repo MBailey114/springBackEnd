@@ -46,6 +46,12 @@ public class ItemController {
         return itemService.getItemByCategory(category);
     }
 
+    @GetMapping(path = "unassigned")
+    public List<Item> getUnassignedItems() {
+        return itemRepo.findByUserIdIsNull();
+    }
+
+
     @GetMapping(path = "user/{userId}")
     public List<Item> getItemsByUser(@PathVariable("userId") Long userId){
         if(!userRepo.existsById(userId)){
@@ -99,6 +105,11 @@ public class ItemController {
     @PutMapping(path = "{itemId}")
     public void updateItem(@RequestBody UpdateItem request, @PathVariable("itemId") Long itemId){
         itemService.editItem(itemId, request.name, request.image, request.description, request.category, request.quantity, request.price);
+    }
+
+    @PutMapping(path = "review/{itemId}")
+    public void addToReviews(@PathVariable("itemId") Long itemId, @RequestBody Integer[] review) {
+        itemService.addToReviews(itemId, review);
     }
 
     @DeleteMapping(path = "user/{userId}")

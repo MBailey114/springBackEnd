@@ -40,6 +40,21 @@ public class ItemService {
 
     }
 
+    public void addToReviews(Long itemId, Integer[] review) {
+        Optional<Item> itemOptional = itemRepository.findById(itemId);
+        if (itemOptional.isPresent()) {
+            Item item = itemOptional.get();
+            List<Integer> reviews = item.getReviews();
+            Integer userId = review[0];
+            if (!reviews.contains(userId)) {
+                reviews.add(userId);
+                reviews.add(review[1]);
+                item.setReviews(reviews);
+                itemRepository.save(item);
+            }
+        }
+    }
+
     public void deleteItem(Long itemId){
         itemRepository.deleteById(itemId);
     }

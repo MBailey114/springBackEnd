@@ -28,6 +28,9 @@ public class Item {
     private String category;
     private Integer quantity;
     private Double price;
+    private List<Integer> reviews;
+
+
 
 
 
@@ -119,4 +122,13 @@ public class Item {
     public void setUser(UserEntity user) {
         this.user = user;
     }
+
+    public List<Integer> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Integer> reviews) {
+        this.reviews = reviews;
+    }
+
 }
