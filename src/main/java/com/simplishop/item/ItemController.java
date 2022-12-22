@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @CrossOrigin
@@ -49,6 +50,16 @@ public class ItemController {
     @GetMapping(path = "unassigned")
     public List<Item> getUnassignedItems() {
         return itemRepo.findByUserIdIsNull();
+    }
+
+    @GetMapping(path = "{itemId}/reviews")
+    public List<Review> getReviews(@PathVariable("itemId") Long itemId) {
+        Optional<Item> item = itemService.getItemById(itemId);
+        if (item.isPresent()) {
+            return item.get().getReviews();
+        } else {
+            throw new NoItemFoundException("Not found Item with id = " + itemId);
+        }
     }
 
 
@@ -107,10 +118,11 @@ public class ItemController {
         itemService.editItem(itemId, request.name, request.image, request.description, request.category, request.quantity, request.price);
     }
 
-    @PutMapping(path = "review/{itemId}")
-    public void addToReviews(@PathVariable("itemId") Long itemId, @RequestBody Integer[] review) {
-        itemService.addToReviews(itemId, review);
-    }
+//    @PutMapping(path = "review/{itemId}")
+//    public void addToReviews(@PathVariable("itemId") Long itemId, @RequestBody Review review) {
+//        itemService.addToReviews(itemId, review);
+//    }
+
 
     @DeleteMapping(path = "user/{userId}")
     public void deleteAllItemsByUser(@PathVariable("userId") Long userId) {
@@ -124,5 +136,14 @@ public class ItemController {
 
         // Finally, delete all the items
         itemRepo.deleteAll(items);
+    }
+}
+
+class Review{
+    Integer id;
+    Integer rating;
+
+    public Integer getId() {
+        return id;
     }
 }

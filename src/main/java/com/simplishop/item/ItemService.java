@@ -4,6 +4,8 @@ import com.simplishop.item.exception.UserNotFoundException;
 import com.simplishop.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 import java.util.Optional;
 import java.util.List;
 import com.simplishop.item.exception.NoItemFoundException;
@@ -40,15 +42,14 @@ public class ItemService {
 
     }
 
-    public void addToReviews(Long itemId, Integer[] review) {
+    public void addToReviews(Long itemId, Review review) {
         Optional<Item> itemOptional = itemRepository.findById(itemId);
         if (itemOptional.isPresent()) {
             Item item = itemOptional.get();
-            List<Integer> reviews = item.getReviews();
-            Integer userId = review[0];
-            if (!reviews.contains(userId)) {
-                reviews.add(userId);
-                reviews.add(review[1]);
+            List<Review> reviews = item.getReviews();
+            Integer userId = review.getId();
+            if (!reviews.stream().anyMatch(r -> r.getId().equals(userId))) {
+                reviews.add(review);
                 item.setReviews(reviews);
                 itemRepository.save(item);
             }

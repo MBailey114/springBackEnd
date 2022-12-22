@@ -1,9 +1,12 @@
 package com.simplishop.item;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.AttributeConverter;
 import com.simplishop.user.UserEntity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import com.simplishop.item.Review;
+import org.hibernate.annotations.Type;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +31,10 @@ public class Item {
     private String category;
     private Integer quantity;
     private Double price;
-    private List<Integer> reviews;
+
+
+    @Convert(converter = ReviewListConverter.class)
+    private List<Review> reviews;
 
 
 
@@ -49,7 +55,8 @@ public class Item {
         this.category = category;
         this.quantity = quantity;
         this.price = price;
-    }
+        this.reviews = new ArrayList<>();
+        }
 
     public Item(String name, String image, String description, String category, Integer quantity, Double price) {
         this.name = name;
@@ -58,6 +65,7 @@ public class Item {
         this.category = category;
         this.quantity = quantity;
         this.price = price;
+        this.reviews = new ArrayList<>();
     }
 
     public Item() {
@@ -123,11 +131,11 @@ public class Item {
         this.user = user;
     }
 
-    public List<Integer> getReviews() {
+    public List<Review> getReviews() {
         return reviews;
     }
 
-    public void setReviews(List<Integer> reviews) {
+    public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
 
