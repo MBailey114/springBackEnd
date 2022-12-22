@@ -26,9 +26,9 @@ public class Review {
     )
     private Long Id;
 
-    private Integer rating;
+    private Integer reviewValue;
 
-    private String content;
+    private String reviewText;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "itemId", nullable = false)
@@ -42,20 +42,20 @@ public class Review {
     @JsonIgnore
     private UserEntity user;
 
-    public Integer getRating() {
-        return rating;
+    public Integer getReviewValue() {
+        return reviewValue;
     }
 
-    public void setRating(Integer rating) {
-        this.rating = rating;
+    public void setReviewValue(Integer reviewValue) {
+        this.reviewValue = reviewValue;
     }
 
-    public String getContent() {
-        return content;
+    public String getReviewText() {
+        return reviewText;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setReviewText(String reviewText) {
+        this.reviewText = reviewText;
     }
 
     public Item getItem() {
