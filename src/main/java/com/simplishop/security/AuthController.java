@@ -6,8 +6,10 @@ import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.simplishop.security.AuthResponseDTO;
+import com.simplishop.security.RegisterResponseDTO;
 import com.simplishop.user.UserEntity;
 import com.simplishop.user.UserRepository;
+import com.simplishop.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -31,14 +34,17 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
     private JWTGenerator jwtGenerator;
 
+    private final UserService userService;
+
 //    CONSTRUCTOR
     @Autowired
-    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator) {
+    public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator, UserService userService) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtGenerator = jwtGenerator;
+        this.userService = userService;
     }
 
 //    LOGIN ENDPOINT THAT WILL ALLOW A USER TO LOG IN AND STORE THEIR DETAILS
@@ -64,9 +70,9 @@ public class AuthController {
 
 //    SETTING UP JSON SO WE DON'T PASS ANY PASSWORDS IN URL STRING
     @PostMapping("register")
-    public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO){
+    public ResponseEntity<RegisterResponseDTO> register(@RequestBody RegisterDTO registerDTO){
         if(userRepository.existsByEmailAddress(registerDTO.getEmailAddress())){
-            return new ResponseEntity<>("Email is already in use", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>( new RegisterResponseDTO("Email address already found"), HttpStatus.BAD_REQUEST);
         }
 
         UserEntity user = new UserEntity();
@@ -74,6 +80,8 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode((registerDTO.getPassword())));
         user.setFirstName(registerDTO.getFirstName());
         user.setLastName(registerDTO.getLastName());
+        user.setWishlist(new ArrayList<Integer>());
+        user.setBasket(new ArrayList<Integer>());
 
 //        DEFAULT ROLE = USER
          Role roles = roleRepository.findByName("USER").get();
@@ -81,8 +89,39 @@ public class AuthController {
 
         userRepository.save(user);
 
-        return new ResponseEntity<>("User Registered Successfully", HttpStatus.OK);
+        return new ResponseEntity<>(new RegisterResponseDTO("User registered successfully"), HttpStatus.OK);
 
+    }
+
+    @PostMapping("email")
+    public ResponseEntity<EmailResponseDTO> register(@RequestBody EmailDTO emailDTO){
+        if(userRepository.existsByEmailAddress(emailDTO.getEmailAddress())){
+            return new ResponseEntity<>( new EmailResponseDTO(emailDTO.getEmailAddress(), true), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new EmailResponseDTO(emailDTO.getEmailAddress(), false), HttpStatus.OK);
+
+    }
+
+    @PostMapping("password")
+    public ResponseEntity<EditPasswordResponseDTO> password(Authentication authentication, @RequestBody EditPasswordDTO editPasswordDTO) {
+        System.out.println(editPasswordDTO);
+        if(!authentication.isAuthenticated()){
+            return new ResponseEntity<EditPasswordResponseDTO>(new EditPasswordResponseDTO("Bad token"), HttpStatus.UNAUTHORIZED);
+        }
+        // User is authenticated
+        // Get current user
+        UserEntity userEntity = userService.getCurrentUser(authentication);
+
+        // Check password
+        Boolean passwordMatch = passwordEncoder.matches(editPasswordDTO.getCurrentPassword(), userEntity.getPassword());
+        if(!passwordMatch) {
+            System.out.println("Incorrect password");
+            return new ResponseEntity<EditPasswordResponseDTO>(new EditPasswordResponseDTO("Incorrect Password"), HttpStatus.UNAUTHORIZED);
+        }
+
+        userEntity.setPassword(passwordEncoder.encode(editPasswordDTO.getNewPassword()));
+        userRepository.save(userEntity);
+        return new ResponseEntity<EditPasswordResponseDTO>(new EditPasswordResponseDTO("Password changed"), HttpStatus.OK);
     }
 
 }

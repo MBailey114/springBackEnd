@@ -67,16 +67,6 @@ public class UserService {
         userRepo.deleteById(id);
     }
 
-    public static void addItemToUser(long userId, long itemId ){
-        Optional<UserEntity> optionalUser = userRepo.findById(userId);
-        Optional<Item> optionalItem = itemRepo.findItemById(itemId);
-        UserEntity user = optionalUser.get();
-        Item item = optionalItem.get();
-//        user.getItems().add(item);
-//        item.getUsers().add(user);
-    }
-
-
     public List<UserEntity> getUsers() {
         return userRepo.findAll();
     }
@@ -98,6 +88,10 @@ public class UserService {
         return user.getWishlist();
     }
 
+    public UserEntity getUserById(Long id) {
+        return userRepo.findById(id).orElse(null);
+    }
+
 
     //    SAVING A USER
     public void addNewUser(UserEntity user) {
@@ -105,6 +99,43 @@ public class UserService {
     }
 
 
+    public static List<Integer> getUsersBasket(Long id) {
+        Optional<UserEntity> optionalUser = userRepo.findById(id);
+        if(optionalUser.isEmpty()) {
+            throw new IllegalStateException("user with id " + id + " does not exist");
+        }
+        UserEntity user = optionalUser.get();
+        return user.getBasket();
+    }
 
+    public static void addToBasketArray(Long id, Integer basket) {
+        Optional<UserEntity> optionalUser = userRepo.findById(id);
+        if(optionalUser.isEmpty()) {
+            return;
+        }
+        UserEntity user = optionalUser.get();
+        List<Integer> basketArray = user.getBasket();
+        for(int i = 0; i < basketArray.toArray().length; i++)
+        {
+            if(basketArray.toArray()[i] == basket)
+            {
+                user.removeFromBasket(basket);
+                userRepo.save(user);
+                return;
+            }
+        }
+        user.addToBasket(basket);
+        userRepo.save(user);
+    }
+
+    public static void resetBasket(Long id)
+    {
+        Optional<UserEntity> optionalUser = userRepo.findById(id);
+        if(optionalUser.isEmpty()) {
+            return;
+        }
+        UserEntity user = optionalUser.get();
+        List<Integer> basketArray = user.resetBasket();
+    }
 
 }

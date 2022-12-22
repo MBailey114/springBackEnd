@@ -2,16 +2,13 @@ package com.simplishop.user;
 
 
 
-import com.simplishop.item.Item;
 import com.simplishop.security.Role;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -47,15 +44,9 @@ public class UserEntity {
                inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles = new ArrayList<>();
 
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JoinTable(name = "user_item", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"))
-//    private List<Item> items = new ArrayList<>();
+    private List<Integer> basket;
 
-    // Add many-to-many relationship with Items
 
-    // private List<Item> wishlist;
-    // private List<Item> basket;
 
 
     public UserEntity(String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist, List<Role> roles) {
@@ -67,25 +58,37 @@ public class UserEntity {
         this.roles = roles;
     }
 
-    //    NO ID CONSTRUCTOR
-    public UserEntity(String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist) {
+//    NO ID CONSTRUCTOR
+    public UserEntity(String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist, List<Integer> basket) {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.emailAddress = emailAddress;
         this.wishlist = wishlist;
+        this.basket = basket;
+
+        this.wishlist.add(0);
+        this.basket.add(0);
     }
 
 
 //    ID CONSTRUCTOR
-public UserEntity(Long id, String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist, List<Role> roles) {
+
+public UserEntity(Long id, String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist, List<Integer> basket) {
+
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.password = password;
     this.emailAddress = emailAddress;
     this.wishlist = wishlist;
-    this.roles = roles;
+
+    this.basket = basket;
+
+    this.wishlist.add(0);
+    this.basket.add(0);
+
 }
 
     public UserEntity() {
@@ -138,6 +141,11 @@ public UserEntity(Long id, String firstName, String lastName, String password, S
     public List<Integer> getWishlist() {
         return wishlist;
     }
+
+    public void setWishlist() {
+        this.wishlist = wishlist;
+    }
+
     public void addToWishlist(Integer itemId) {
         this.wishlist.add(itemId);
     }
@@ -146,10 +154,19 @@ public UserEntity(Long id, String firstName, String lastName, String password, S
         this.wishlist.remove(itemId);
     }
 
-//    public List<Item> getItems() {
-//        return items;
-//    }
-//    public void setItems(List<Item> items) {
-//        this.items = items;
-//    }
+
+    public void addToBasket(Integer itemId) {this.basket.add(itemId);}
+    public void removeFromBasket(Integer itemId) {this.basket.remove(itemId);}
+    public List<Integer> resetBasket(){ this.basket = new ArrayList<Integer>();
+        return null;
+    }
+
+    public List<Integer> getBasket() {
+        return basket;
+    }
+
+    public void setBasket(List<Integer> basket) {
+        this.basket = basket;
+    }
+
 }

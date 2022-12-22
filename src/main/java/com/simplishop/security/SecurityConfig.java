@@ -19,6 +19,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -59,7 +60,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/auth/**", "/shop/item/**", "/shop/user/wishlist/**", "/shop/user/**").permitAll()
+                .requestMatchers("/api/auth/**", "/shop/item/**", "/shop/user/wishlist/**", "/**", "/shop/user/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();

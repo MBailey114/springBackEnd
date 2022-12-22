@@ -12,11 +12,20 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     //@Query("SELECT * FROM Item s WHERE s.category = ?1")
     List<Item> findAllByCategory(String category);
-
     @Query("SELECT s FROM Item s WHERE s.id = ?1")
     Optional<Item> findItemById(Long id);
 
+
     Optional<Item> findByCategory(String category);
+
+
+    List<Item> findByUserId(Long userId);
+
+    List<Item> findByNameContainingIgnoreCase(String name);
+
+    List<Item> findByDescriptionContainingIgnoreCase(String description);
+
+    List<Item> findByUserIdIsNull();
 
 
 }

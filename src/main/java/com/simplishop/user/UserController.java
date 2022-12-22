@@ -4,6 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,25 +34,56 @@ public class UserController {
         return userService.getCurrentUser(authentication);
     }
 
+    @GetMapping("{id}")
+    public UserEntity getUserById(@PathVariable("id") Long id) {
+        return userService.getUserById(id);
+    }
+
+
     @GetMapping(path = "wishlist/{id}")
     public List<Integer> getUserWishlist(@PathVariable("id") Long id){
         return userService.getUsersWishlist(id);
     }
 
+    @GetMapping(path = "basket/{id}")
+    public List<Integer> getUserBasket(@PathVariable("id") Long id){
+        return userService.getUsersBasket(id);
+    }
+
     record NewUser(String firstName, String lastName, String password, String email){};
     record UpdateUserArray(Integer itemId){};
+    record UpdateBasketArray(Integer itemId) {};
+    record UpdatePassword(String currentPassword, String newPassword){};
 
     record UpdateUser(Optional<String> firstName, Optional<String> lastName, Optional<String> password, Optional<String> email){};
 
     @PostMapping
     public void addUser(@RequestBody NewUser request){
-        UserEntity user = new UserEntity();
+        UserEntity user = new UserEntity(request.firstName(), request.lastName(), request.password(), request.email(), new ArrayList<Integer>(), new ArrayList<Integer>());
         user.setFirstName(request.firstName());
         user.setLastName(request.lastName());
         user.setPassword(request.password());
         user.setEmailAddress(request.email());
         userService.addNewUser(user);
     }
+
+    // POST /shop/user/:userID/password
+//    @PostMapping (path = "{id}/password")
+//    public void editPassword(Authentication authentication, @RequestBody NewUser request){
+//
+//        // Check that authentication is correct
+//        if(authentication.isAuthenticated()){
+//            System.out.println("Hello");
+//            return;
+//        }else{
+//            // Look for current user in db
+//            userService.getCurrentUser(authentication);
+//
+//
+//        }
+//        user.setPassword(request.password());
+//        userService.addNewUser(user);
+//    }
 
     @PutMapping(path = "{id}")
     public void updateUser(@RequestBody UpdateUser request, @PathVariable("id") Long id) {
@@ -63,15 +95,26 @@ public class UserController {
         UserService.addToUserArray(id, request.itemId);
     }
 
+    @PutMapping(path = "basket/{id}")
+    public void addToBasketArray(@RequestBody UpdateBasketArray request, @PathVariable("id") Long id) {
+        UserService.addToBasketArray(id, request.itemId);
+    }
+
 
     @DeleteMapping("{id}")
     public void deletingUser(@PathVariable("id") Long id) {
         UserService.deleteUser(id);
     }
 
-    @PutMapping(path = "addItem/{itemId}/{userId}")
-    public void addItemToUser(@PathVariable("itemId") long itemId, @PathVariable("userId") long userId){
-        addItemToUser(userId,itemId);
-    }
+    @DeleteMapping("wishlist/{id}")
+    public void resetBasket(@PathVariable("id") Long id) {
+        UserService.resetBasket(id);}
+
+
+
+//    @PutMapping(path = "addItem/{itemId}/{userId}")
+//    public void addItemToUser(@PathVariable("itemId") long itemId, @PathVariable("userId") long userId){
+//        addItemToUser(userId,itemId);
+//    }
 
 }
