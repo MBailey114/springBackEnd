@@ -93,6 +93,15 @@ public class AuthController {
 
     }
 
+    @PostMapping("email")
+    public ResponseEntity<EmailResponseDTO> register(@RequestBody EmailDTO emailDTO){
+        if(userRepository.existsByEmailAddress(emailDTO.getEmailAddress())){
+            return new ResponseEntity<>( new EmailResponseDTO(emailDTO.getEmailAddress(), true), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new EmailResponseDTO(emailDTO.getEmailAddress(), false), HttpStatus.OK);
+
+    }
+
     @PostMapping("password")
     public ResponseEntity<EditPasswordResponseDTO> password(Authentication authentication, @RequestBody EditPasswordDTO editPasswordDTO) {
         System.out.println(editPasswordDTO);
