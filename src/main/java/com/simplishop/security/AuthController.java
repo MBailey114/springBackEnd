@@ -81,6 +81,7 @@ public class AuthController {
         user.setFirstName(registerDTO.getFirstName());
         user.setLastName(registerDTO.getLastName());
         user.setWishlist(new ArrayList<Integer>());
+        user.setBasket(new ArrayList<Integer>());
 
 //        DEFAULT ROLE = USER
          Role roles = roleRepository.findByName("USER").get();
