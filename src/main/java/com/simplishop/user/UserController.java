@@ -45,15 +45,21 @@ public class UserController {
         return userService.getUsersWishlist(id);
     }
 
+    @GetMapping(path = "basket/{id}")
+    public List<Integer> getUserBasket(@PathVariable("id") Long id){
+        return userService.getUsersBasket(id);
+    }
+
     record NewUser(String firstName, String lastName, String password, String email){};
     record UpdateUserArray(Integer itemId){};
+    record UpdateBasketArray(Integer itemId) {};
     record UpdatePassword(String currentPassword, String newPassword){};
 
     record UpdateUser(Optional<String> firstName, Optional<String> lastName, Optional<String> password, Optional<String> email){};
 
     @PostMapping
     public void addUser(@RequestBody NewUser request){
-        UserEntity user = new UserEntity(request.firstName(), request.lastName(), request.password(), request.email(), new ArrayList<Integer>());
+        UserEntity user = new UserEntity(request.firstName(), request.lastName(), request.password(), request.email(), new ArrayList<Integer>(), new ArrayList<Integer>());
         user.setFirstName(request.firstName());
         user.setLastName(request.lastName());
         user.setPassword(request.password());
@@ -87,6 +93,11 @@ public class UserController {
     @PutMapping(path = "wishlist/{id}")
     public void addUserArray(@RequestBody UpdateUserArray request, @PathVariable("id") Long id) {
         UserService.addToUserArray(id, request.itemId);
+    }
+
+    @PutMapping(path = "basket/{id}")
+    public void addToBasketArray(@RequestBody UpdateBasketArray request, @PathVariable("id") Long id) {
+        UserService.addToBasketArray(id, request.itemId);
     }
 
 
