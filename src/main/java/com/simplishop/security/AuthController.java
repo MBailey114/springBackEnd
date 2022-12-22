@@ -81,6 +81,7 @@ public class AuthController {
         user.setFirstName(registerDTO.getFirstName());
         user.setLastName(registerDTO.getLastName());
         user.setWishlist(new ArrayList<Integer>());
+        user.setBasket(new ArrayList<Integer>());
 
 //        DEFAULT ROLE = USER
          Role roles = roleRepository.findByName("USER").get();
@@ -89,6 +90,15 @@ public class AuthController {
         userRepository.save(user);
 
         return new ResponseEntity<>(new RegisterResponseDTO("User registered successfully"), HttpStatus.OK);
+
+    }
+
+    @PostMapping("email")
+    public ResponseEntity<EmailResponseDTO> register(@RequestBody EmailDTO emailDTO){
+        if(userRepository.existsByEmailAddress(emailDTO.getEmailAddress())){
+            return new ResponseEntity<>( new EmailResponseDTO(emailDTO.getEmailAddress(), true), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new EmailResponseDTO(emailDTO.getEmailAddress(), false), HttpStatus.OK);
 
     }
 
