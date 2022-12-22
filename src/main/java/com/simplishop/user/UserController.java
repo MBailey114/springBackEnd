@@ -106,9 +106,8 @@ public class UserController {
         UserService.deleteUser(id);
     }
 
-    @PutMapping("reset/wishlist/{id}")
-    public void resetBasket(@PathVariable("id") Long id) {
-        UserService.resetBasket(id);}
+    @PutMapping(path = "reset/{id}")
+    public void resetBasket(@PathVariable("id") Long id) {UserService.resetBasket(id);}
 
 
 

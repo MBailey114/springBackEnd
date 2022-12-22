@@ -138,6 +138,6 @@ public class UserService {
         }
         UserEntity user = optionalUser.get();
         user.resetBasket();
+        userRepo.save(user);
     }
-
 }
