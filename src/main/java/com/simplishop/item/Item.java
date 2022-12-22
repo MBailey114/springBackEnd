@@ -3,16 +3,22 @@ package com.simplishop.item;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.simplishop.user.UserEntity;
 import jakarta.persistence.*;
+
+import lombok.Builder;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import com.simplishop.review.Review;
 
 
+
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+
 @Table
+@Builder
+@Entity
 public class Item {
     @Id
     @SequenceGenerator(
@@ -31,7 +37,6 @@ public class Item {
     private String category;
     private Integer quantity;
     private Double price;
-
 
 
     @ManyToOne(fetch = FetchType.LAZY)

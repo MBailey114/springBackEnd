@@ -4,6 +4,7 @@ package com.simplishop.user;
 
 import com.simplishop.security.Role;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,9 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Builder
 @Table(name = "users")
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 public class UserEntity {
 
     // Create an id in ascending order
@@ -41,16 +43,24 @@ public class UserEntity {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles = new ArrayList<>();
+
     private List<Integer> basket;
 
-    // Add many-to-many relationship with Items
 
-    // private List<Item> wishlist;
-    // private List<Item> basket;
 
+
+    public UserEntity(String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist, List<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.emailAddress = emailAddress;
+        this.wishlist = wishlist;
+        this.roles = roles;
+    }
 
 //    NO ID CONSTRUCTOR
     public UserEntity(String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist, List<Integer> basket) {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -64,22 +74,25 @@ public class UserEntity {
 
 
 //    ID CONSTRUCTOR
+
 public UserEntity(Long id, String firstName, String lastName, String password, String emailAddress, List<Integer> wishlist, List<Integer> basket) {
+
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.password = password;
     this.emailAddress = emailAddress;
     this.wishlist = wishlist;
+
     this.basket = basket;
 
     this.wishlist.add(0);
     this.basket.add(0);
+
 }
 
-
-
-
+    public UserEntity() {
+    }
 
     public Long getId() {
         return id;
@@ -141,6 +154,7 @@ public UserEntity(Long id, String firstName, String lastName, String password, S
         this.wishlist.remove(itemId);
     }
 
+
     public void addToBasket(Integer itemId) {this.basket.add(itemId);}
     public void removeFromBasket(Integer itemId) {this.basket.remove(itemId);}
     public void resetBasket(){ this.basket = new ArrayList<Integer>();}
@@ -152,4 +166,5 @@ public UserEntity(Long id, String firstName, String lastName, String password, S
     public void setBasket(List<Integer> basket) {
         this.basket = basket;
     }
+
 }
