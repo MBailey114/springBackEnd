@@ -16,13 +16,13 @@ public class Review {
 
     @Id
     @SequenceGenerator(
-            name="item_sequence",
-            sequenceName = "item_sequence",
+            name="review_sequence",
+            sequenceName = "review_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "item_sequence"
+            generator = "review_sequence"
     )
     private Long Id;
 
