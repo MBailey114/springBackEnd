@@ -49,7 +49,7 @@ public class UserController {
         return userService.getReviewsForUser(userId);
     }
 
-    @GetMapping(path = "review/{reviewId")
+    @GetMapping(path = "review/{reviewId}")
     public UserEntity getUserByReview(@PathVariable("reviewId") Long reviewId){
         Optional<Review> review = reviewRepository.findById(reviewId);
         return review.get().getUser();
