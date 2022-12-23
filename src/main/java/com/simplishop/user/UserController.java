@@ -1,5 +1,6 @@
 package com.simplishop.user;
 import com.simplishop.review.Review;
+import com.simplishop.review.ReviewRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.core.Authentication;
@@ -19,8 +20,11 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    private final ReviewRepository reviewRepository;
+
+    public UserController(UserService userService, ReviewRepository reviewRepository) {
         this.userService = userService;
+        this.reviewRepository = reviewRepository;
     }
 
     @GetMapping
@@ -43,6 +47,12 @@ public class UserController {
     @GetMapping(path = "{userId}/reviews")
     public List<Review> getReviews(@PathVariable("userId") Long userId) {
         return userService.getReviewsForUser(userId);
+    }
+
+    @GetMapping(path = "review/{reviewId")
+    public UserEntity getUserByReview(@PathVariable("reviewId") Long reviewId){
+        Optional<Review> review = reviewRepository.findById(reviewId);
+        return review.get().getUser();
     }
 
     @GetMapping(path = "wishlist/{id}")
