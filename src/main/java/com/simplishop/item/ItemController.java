@@ -117,6 +117,9 @@ public class ItemController {
         itemService.editItem(itemId, request.name, request.image, request.description, request.category, request.quantity, request.price);
     }
 
+    @PutMapping(path = "quantity/{itemId}")
+    public void reduceItemQuantity(@PathVariable("itemId") Long itemId){itemService.reduceQuantity(itemId);}
+
     @PutMapping(path = "review/{itemId}/{userId}")
     public ResponseEntity<Object> addToReviews(@PathVariable("itemId") Long itemId,@PathVariable("userId") Long userId, @RequestBody Review review) {
         try {
@@ -125,7 +128,6 @@ public class ItemController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(review, HttpStatus.CREATED);
-
     }
 
 

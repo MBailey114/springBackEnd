@@ -115,6 +115,14 @@ public class Item {
         this.price = price;
     }
 
+    public void reduceQuantity(){
+        if (this.quantity <= 0) {
+            return;
+        }
+        this.quantity = this.quantity - 1;
+    }
+
+
     public UserEntity getUser() {
         return user;
     }

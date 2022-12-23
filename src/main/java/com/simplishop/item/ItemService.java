@@ -97,4 +97,14 @@ public class ItemService {
         Item item = optionalItem.get();
         return reviewRepository.findByItem(item);
     }
+
+    public void reduceQuantity(Long itemId) {
+        Optional<Item> optionalItem = itemRepository.findItemById(itemId);
+        if(optionalItem.isEmpty()) {
+            return;
+        }
+        Item item = optionalItem.get();
+        item.reduceQuantity();
+        itemRepository.save(item);
+    }
 }
