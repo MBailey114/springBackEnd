@@ -42,6 +42,11 @@ public class Review {
     @JsonIgnore
     private UserEntity user;
 
+
+    public Long getId() {
+        return Id;
+    }
+
     public Integer getReviewValue() {
         return reviewValue;
     }
