@@ -2,8 +2,11 @@ package com.simplishop.user;
 
 import com.simplishop.item.Item;
 import com.simplishop.item.ItemRepository;
+import com.simplishop.review.Review;
+import com.simplishop.review.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,6 +17,8 @@ public class UserService {
     private static UserRepository userRepo;
 
     private static ItemRepository itemRepo;
+
+    private static ReviewRepository reviewRepo;
 
     @Autowired
     public UserService(UserRepository userRepo) {
@@ -140,4 +145,14 @@ public class UserService {
         user.resetBasket();
         userRepo.save(user);
     }
+//<<<<<<< HEAD
+//=======
+
+    public List<Review> getReviewsForUser(Long userId) {
+        Optional<UserEntity> optionalUser = userRepo.findById(userId);
+        UserEntity user = optionalUser.get();
+        return reviewRepo.findByUser(user);
+    }
+
+//>>>>>>> 9d60500f2d74839ae6bd4effbb837f99630e31d0
 }
