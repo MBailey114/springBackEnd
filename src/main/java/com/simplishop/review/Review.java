@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.simplishop.item.Item;
 import com.simplishop.user.UserEntity;
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.security.core.userdetails.User;
 
 
 @Entity
 @Table
+@NoArgsConstructor
 public class Review {
 
 
@@ -42,6 +43,13 @@ public class Review {
     @JsonIgnore
     private UserEntity user;
 
+    public Review(Long id, Integer reviewValue, String reviewText, Item item, UserEntity user) {
+        Id = id;
+        this.reviewValue = reviewValue;
+        this.reviewText = reviewText;
+        this.item = item;
+        this.user = user;
+    }
 
     public Long getId() {
         return Id;

@@ -1,9 +1,11 @@
 package com.simplishop.user;
+import com.simplishop.item.Item;
 import com.simplishop.review.Review;
 import com.simplishop.review.ReviewRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -50,9 +52,10 @@ public class UserController {
     }
 
     @GetMapping(path = "review/{reviewId}")
-    public UserEntity getUserByReview(@PathVariable("reviewId") Long reviewId){
+    public Long getUserIdByItem(@PathVariable("reviewId") Long reviewId) {
         Optional<Review> review = reviewRepository.findById(reviewId);
-        return review.get().getUser();
+        UserEntity user = review.get().getUser();
+        return user == null ? null : user.getId();
     }
 
     @GetMapping(path = "wishlist/{id}")
